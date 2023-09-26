@@ -1,15 +1,16 @@
-# volumes:
 services:
   fastapi:
-    environment:
-      CORS_HOST: http://localhost:3000
     build:
       context: api
       dockerfile: Dockerfile.dev
     ports:
-      - 8000:8000
+      - "8000:8000"
     volumes:
       - ./api:/app
+    environment:
+      CORS_HOST: http://localhost:3000
+      DATABASE_URL: postgresql://volunteer:helping@db/helping-hands-db
+
 
   ghi:
     image: node:lts-bullseye
@@ -24,4 +25,26 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+      REACT_APP_API_HOST: http://localhost:8000
+
+
+  hands-db:
+    image: postgres:14.5-bullseye
+    volumes:
+      - hands-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: helping
+      POSTGRES_USER: volunteer
+      POSTGRES_DB: helping-hands-db
+    ports:
+      - "15432:5432"
+
+
+volumes:
+  hands-data:
+    external: true
+
+
+#TEST TEST TEST
+
+
