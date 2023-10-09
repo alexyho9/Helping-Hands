@@ -76,16 +76,29 @@ class UserQueries:
             return {"message": "Could not create a user"}
 
 
-    def get_all_users():
+    def get_all_users(self,):
         pass
 
 
     def get_user():
         pass
 
+    def delete_user(self, user_id: int) -> UserOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        DELETE FROM users
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        (user_id),
+                    )
+                return True
+        except Exception:
+            return {"message": "User did not delete"}
 
-    def delete_user():
-        pass
 
     def get_user_by_username(self, username: str) -> UserOutWithPassword:
         with pool.connection() as conn:
@@ -108,4 +121,3 @@ class UserQueries:
                     return None
 
                 return UserOutWithPassword(**record)
-
