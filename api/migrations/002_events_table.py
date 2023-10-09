@@ -4,7 +4,7 @@ steps = [
         """
         CREATE TABLE events (
             id SERIAL PRIMARY KEY,
-            event_name VARCHAR(200) NOT NULL,
+            event_name VARCHAR(200) UNIQUE NOT NULL,
             picture_url TEXT NOT NULL,
             description TEXT NOT NULL,
             location VARCHAR(150) NOT NULL,
