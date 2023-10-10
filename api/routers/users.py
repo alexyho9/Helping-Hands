@@ -7,6 +7,7 @@ from fastapi import (
     APIRouter,
     Request,
 )
+from typing import List,Optional, Union
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 
@@ -15,8 +16,9 @@ from pydantic import BaseModel
 from queries.users import (
     UserIn,
     UserOut,
+    UserListOut,
     UserQueries,
-    DuplicateUserError
+    DuplicateUserError,Error
 )
 
 
@@ -67,3 +69,15 @@ async def create_user(
     form = UserForm(username=info.username, password=info.password)
     token = await authenticator.login(response, request, form, query)
     return UserToken(user=user, **token.dict())
+
+
+@router.get("/api/users", respose_model=Union[List[UserListOut], Error])
+def get_all_users(queries: UserQueries = Depends()):
+    return {
+        "users": queries.get_all_users(),
+    }
+
+@router.delete("/api/users/{user_id}", response_model=bool)
+def delete_user(user_id: int, queries: UserQueries = Depends()):
+    queries.delete_user(user_id)
+    return True

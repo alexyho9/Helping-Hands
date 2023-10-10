@@ -76,18 +76,70 @@ class UserQueries:
             return {"message": "Could not create a user"}
 
 
-    def get_all_users(self,):
-        pass
+    def get_all_users(self, username: str) -> UserListOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT id,
+                            first_name,
+                            last_name,
+                            username,
+                            email,
+                            role,
+                        FROM users
+                        WHERE username = %s;
+                        """,
+                        [username],
+                    )
+                    us = db.fetchone()
+                    if us is None:
+                        raise Exception("No Users found")
+                    else:
+                        try:
+                            return UserOut(
+                                id=us[0],
+                                first_name=us[1],
+                                last_name=us[2],
+                                username=us[3],
+                                role=us[4],
+                            )
+                        except Exception:
+                            return {"message":"No Users"}
 
 
-    def get_user():
-        pass
+    def get(self, user_id: str) -> UserOutWithPassword:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT
+                        user_id,
+                        first_name,
+                        last_name,
+                        username,
+                        role,
+                        hashed_password
+                        FROM users
+                        WHERE user_id = %s
+                        """,
+                        [user_id],
+                    )
+                    record = result.fetchone()
+                    print("record found",record)
+                    if record is None:
+                        return None
+                    return self.record_to_account_out(record)
+        except Exception:
+            return {"message": "Could not get account"}
 
     def delete_user(self, user_id: int) -> UserOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
-                    cur.execute(
+                    db.execute(
                         """
                         DELETE FROM users
                         WHERE id = %s
