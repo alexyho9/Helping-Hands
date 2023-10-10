@@ -71,11 +71,15 @@ async def create_user(
     return UserToken(user=user, **token.dict())
 
 
-@router.get("/api/users", respose_model=Union[List[UserListOut], Error])
-def get_all_users(queries: UserQueries = Depends()):
+@router.get("/api/users", response_model=Union[UserListOut, Error])
+def get_all_users(
+    users: UserQueries = Depends(UserQueries)
+
+):
     return {
-        "users": queries.get_all_users(),
+        "users": users.get_all_users(),
     }
+
 
 @router.delete("/api/users/{user_id}", response_model=bool)
 def delete_user(user_id: int, queries: UserQueries = Depends()):

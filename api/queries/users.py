@@ -1,6 +1,7 @@
 from pydantic import BaseModel
+
 from queries.pool import pool
-from typing import Optional, List
+from typing import Optional, List, Union
 
 
 class Error(BaseModel):
@@ -76,37 +77,29 @@ class UserQueries:
             return {"message": "Could not create a user"}
 
 
-    def get_all_users(self, username: str) -> UserListOut:
+    def get_all_users(self) -> Union[Error, UserListOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
-                        SELECT id,
-                            first_name,
-                            last_name,
-                            username,
-                            email,
-                            role,
+                        SELECT *
                         FROM users
-                        WHERE username = %s;
+                        ORDER BY id
                         """,
-                        [username],
                     )
-                    us = db.fetchone()
-                    if us is None:
-                        raise Exception("No Users found")
-                    else:
-                        try:
-                            return UserOut(
-                                id=us[0],
-                                first_name=us[1],
-                                last_name=us[2],
-                                username=us[3],
-                                role=us[4],
+                    return [
+                        UserListOut(
+                            id=user[0],
+                            first_name=user[1],
+                            last_name=user[2],
+                            username=user[3],
+                            role=user[4],
                             )
-                        except Exception:
-                            return {"message":"No Users"}
+                        for user in db
+                    ]
+        except Exception:
+            return {"message":"No Users"}
 
 
     def get(self, user_id: str) -> UserOutWithPassword:
