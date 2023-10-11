@@ -91,6 +91,7 @@ class EventQueries:
                 return self.event_in_to_out(event_id, event)
         except Exception:
             return{"message": "Could not update event"}
+
     def get_all_events(self) -> Union[Error, List[EventOut]]:
         try:
             with pool.connection() as conn:
@@ -151,5 +152,32 @@ class EventQueries:
             print(e)
             return {"message": "Could not get that event"}
 
-        
-                
+    # def get_user_events(self, user_email: str) -> Union[Error, List[EventOut]]:
+    #     try:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as db:
+    #                 result = """
+    #                     SELECT e.id, e.event_name, e.picture_url, e.description, e.location, e.date
+    #                     FROM events e
+    #                     JOIN user_events ue ON e.id = ue.event_id
+    #                     JOIN users u ON ue.user_id = u.email
+    #                     WHERE u.email = %s
+    #                     ORDER BY e.date
+    #                     """
+    #                 db.execute(result, [user_email])
+    #                 records = db.fetchall
+    #                 user_events = [
+    #                         EventOut(
+    #                         id=record[0],
+    #                         event_name=record[1],
+    #                         picture_url=record[2],
+    #                         description=record[3],
+    #                         location=record[4],
+    #                         date=record[5]
+    #                     )
+    #                     for record in records
+    #                     ]
+    #                 return user_events
+
+    #     except Exception:
+    #         return {"message": "Could not get user events"}
