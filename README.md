@@ -2,7 +2,7 @@
 
 ## Getting started
 
-You have a project repository, now what? The next section
+You have a project repository, now what? The next sectio
 lists all of the deliverables that are due at the end of the
 week. Below is some guidance for getting started on the
 tasks for this week.
