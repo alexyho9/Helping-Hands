@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from typing import Optional, List
+from typing import Optional, List, Union
 
 
 class Error(BaseModel):
@@ -20,7 +20,6 @@ class UserIn(BaseModel):
     role: str
 
 
-
 class UserOut(BaseModel):
     id: int
     first_name: str
@@ -28,7 +27,6 @@ class UserOut(BaseModel):
     username: str
     email: str
     role: str
-
 
 
 class UserOutWithPassword(UserOut):
@@ -75,19 +73,65 @@ class UserQueries:
         except Exception:
             return {"message": "Could not create a user"}
 
+    def update_user(
+            self,
+            username: str,
+            user: UserIn,
+            hashed_password: str) -> UserOutWithPassword:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE users
+                        SET first_name = %s,
+                            last_name = %s,
+                            username = %s,
+                            email = %s,
+                            hashed_password = %s,
+                            role = %s
+                        WHERE username = %s
+                        RETURNING *
+                        """,
+                        [
+                            user.first_name,
+                            user.last_name,
+                            user.username,
+                            user.email,
+                            hashed_password,
+                            user.role,
+                            username
+                        ]
+                    )
+                    update = db.fetchone()
+                    return UserOutWithPassword(
+                        id=update[0],
+                        first_name=update[1],
+                        last_name=update[2],
+                        username=update[3],
+                        email=update[4],
+                        hashed_password=update[5],
+                        role=update[6],
+                    )
+        except Exception:
+            return {"message": "Could not update the user"}
 
-    def get_all_users():
-        pass
+    def delete_user(self, username: str) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM users
+                        WHERE username = %s
+                        """,
+                        [username]
+                    )
+                return True
+        except Exception:
+            return False
 
-
-    def get_user():
-        pass
-
-
-    def delete_user():
-        pass
-
-    def get_user_by_username(self, username: str) -> UserOutWithPassword:
+    def get_user_by_username(self, username: str) -> Optional[UserOutWithPassword]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 db.execute(
@@ -109,3 +153,29 @@ class UserQueries:
 
                 return UserOutWithPassword(**record)
 
+    def get_all_users(self) -> Union[UserListOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT *
+                        FROM users
+                        ORDER BY id
+                        """
+                    )
+                    records = db.fetchall()
+                    return [
+                        UserOut(
+                            id=record[0],
+                            first_name=record[1],
+                            last_name=record[2],
+                            username=record[3],
+                            email=record[4],
+                            hashed_password=record[5],
+                            role=record[6]
+                        )
+                        for record in records
+                    ]
+        except Exception:
+            return {"message": "Could not get all users"}
