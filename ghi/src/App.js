@@ -1,37 +1,38 @@
 import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
-import ErrorNotification from "./ErrorNotification";
 import "./App.css";
+import ListEvents from "./events/ListEvents.js";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import LoginForm from "./users/LoginForm.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EventDetails from "./events/EventDetails";
 
 function App() {
-  const [launchInfo, setLaunchInfo] = useState([]);
-  const [error, setError] = useState(null);
+  const { token, fetchWithCookie } = useToken();
+  const [user, setUser] = useState({});
+   const fetchLoggedInUser = async () => {
+     if (token) {
+       const newToken = await fetchWithCookie(
+         `${process.env.REACT_APP_API_HOST}/token`
+       );
 
-  useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-      console.log("fastapi url: ", url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
+       const account = newToken.account;
+       setUser(account);
+     }
+   };
 
-      if (response.ok) {
-        console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
-      }
-    }
-    getData();
-  }, []);
+   useEffect(() => {
+     fetchLoggedInUser();
+   }, [token]);
+return(
+<BrowserRouter>
+  <Routes>
+    <Route path="accounts/signup" element={<LoginForm />} />
+    <Route path="events" element={<ListEvents/>} />
+    <Route path="events/:id" element={<EventDetails/>}/>
+  </Routes>
+</BrowserRouter>
 
-  return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
-    </div>
-  );
+)
 }
 
 export default App;
