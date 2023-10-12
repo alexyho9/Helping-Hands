@@ -6,6 +6,7 @@ import ListEvents from "./events/ListEvents.js";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EventDetails from "./events/EventDetails";
+import LoginForm from "./users/LoginForm";
 
 function App() {
   const { token, fetchWithCookie } = useToken();
@@ -29,6 +30,7 @@ return(
   <Routes>
     <Route path="events" element={<ListEvents/>} />
     <Route path="events/:id" element={<EventDetails/>}/>
+    <Route path="login" element={<LoginForm/>}/>
   </Routes>
 </BrowserRouter>
 
