@@ -43,8 +43,8 @@ class EventQueries:
                             event.picture_url,
                             event.description,
                             event.location,
-                            event.date
-                        ]
+                            event.date,
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.event_in_to_out(id, event)
@@ -62,7 +62,7 @@ class EventQueries:
             picture_url=record[2],
             description=record[3],
             location=record[4],
-            date=record[5]
+            date=record[5],
         )
 
     def update(self, event_id: int, event: EventIn) -> Union[EventOut, Error]:
@@ -85,12 +85,12 @@ class EventQueries:
                             event.description,
                             event.location,
                             event.date,
-                            event_id
-                        ]
+                            event_id,
+                        ],
                     )
                 return self.event_in_to_out(event_id, event)
         except Exception:
-            return{"message": "Could not update event"}
+            return {"message": "Could not update event"}
 
     def get_all_events(self) -> Union[Error, List[EventOut]]:
         try:
@@ -105,17 +105,18 @@ class EventQueries:
                     )
                     return [
                         EventOut(
-                            id= record[0],
-                            event_name = record[1],
-                            picture_url = record[2],
-                            description = record[3],
-                            location = record[4],
-                            date = record[5]
+                            id=record[0],
+                            event_name=record[1],
+                            picture_url=record[2],
+                            description=record[3],
+                            location=record[4],
+                            date=record[5],
                         )
                         for record in db
                     ]
         except Exception:
             return {"message": "Could not get all events"}
+
     def delete_event(self, event_id: int) -> bool:
         try:
             with pool.connection() as conn:
@@ -125,13 +126,13 @@ class EventQueries:
                         DELETE FROM events
                         WHERE id = %s
                         """,
-                        [event_id]
-
+                        [event_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
+
     def get_event(self, event_id: int) -> Optional[EventOut]:
         try:
             with pool.connection() as conn:
@@ -142,7 +143,7 @@ class EventQueries:
                         FROM events
                         WHERE id = %s
                         """,
-                        [event_id]
+                        [event_id],
                     )
                     record = result.fetchone()
                     if record is None:

@@ -1,4 +1,3 @@
-
 from fastapi import (
     Depends,
     HTTPException,
@@ -16,9 +15,8 @@ from queries.users import (
     UserIn,
     UserOut,
     UserQueries,
-    UserListOut,
     Error,
-    DuplicateUserError
+    DuplicateUserError,
 )
 
 
@@ -38,14 +36,16 @@ class HttpError(BaseModel):
 router = APIRouter()
 
 
-def get_current_user(user: UserOut = Depends(authenticator.get_current_account_data)):
+def get_current_user(
+    user: UserOut = Depends(authenticator.get_current_account_data),
+):
     return user
 
 
 @router.get("/token", response_model=UserToken | None)
 async def get_token(
     request: Request,
-    user: UserOut = Depends(authenticator.try_get_current_account_data)
+    user: UserOut = Depends(authenticator.try_get_current_account_data),
 ):
     if user and authenticator.cookie_name in request.cookies:
         return {
@@ -78,7 +78,7 @@ async def create_user(
 @router.get("/api/users/", response_model=Union[List[UserOut], Error])
 def get_all_users(
     current_user: UserOut = Depends(get_current_user),
-    query: UserQueries = Depends()
+    query: UserQueries = Depends(),
 ):
     if current_user:
         return query.get_all_users()
@@ -90,7 +90,7 @@ def get_all_users(
 def delete_user(
     username: str,
     current_user: UserOut = Depends(get_current_user),
-    query: UserQueries = Depends()
+    query: UserQueries = Depends(),
 ):
     if current_user:
         return query.delete_user(username)
@@ -103,7 +103,7 @@ def update_user(
     username: str,
     user: UserIn,
     current_user: UserOut = Depends(get_current_user),
-    query: UserQueries = Depends()
+    query: UserQueries = Depends(),
 ):
     if current_user:
         hashed_password = authenticator.hash_password(user.password)

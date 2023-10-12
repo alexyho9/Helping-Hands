@@ -38,18 +38,32 @@ class UserListOut(BaseModel):
 
 
 class UserQueries:
-    def create_user(self, user: UserIn, hashed_password: str) -> UserOutWithPassword:
+    def create_user(
+        self, user: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
                         INSERT INTO users
-                            (first_name, last_name, username, email, hashed_password, role)
+                            (first_name,
+                            last_name,
+                            username,
+                            email,
+                            hashed_password,
+                            role
+                            )
                         VALUES
                             (%s, %s, %s, %s, %s, %s)
                         RETURNING
-                        id, first_name, last_name, username, email, hashed_password, role;
+                        id,
+                        first_name,
+                        last_name,
+                        username,
+                        email,
+                        hashed_password,
+                        role;
                         """,
                         [
                             user.first_name,
@@ -57,8 +71,8 @@ class UserQueries:
                             user.username,
                             user.email,
                             hashed_password,
-                            user.role
-                        ]
+                            user.role,
+                        ],
                     )
                     id = result.fetchone()[0]
                     return UserOutWithPassword(
@@ -68,16 +82,14 @@ class UserQueries:
                         username=user.username,
                         email=user.email,
                         hashed_password=hashed_password,
-                        role=user.role
+                        role=user.role,
                     )
         except Exception:
             return {"message": "Could not create a user"}
 
     def update_user(
-            self,
-            username: str,
-            user: UserIn,
-            hashed_password: str) -> UserOutWithPassword:
+        self, username: str, user: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -100,8 +112,8 @@ class UserQueries:
                             user.email,
                             hashed_password,
                             user.role,
-                            username
-                        ]
+                            username,
+                        ],
                     )
                     update = db.fetchone()
                     return UserOutWithPassword(
@@ -125,13 +137,15 @@ class UserQueries:
                         DELETE FROM users
                         WHERE username = %s
                         """,
-                        [username]
+                        [username],
                     )
                 return True
         except Exception:
             return False
 
-    def get_user_by_username(self, username: str) -> Optional[UserOutWithPassword]:
+    def get_user_by_username(
+        self, username: str
+    ) -> Optional[UserOutWithPassword]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 db.execute(
@@ -173,7 +187,7 @@ class UserQueries:
                             username=record[3],
                             email=record[4],
                             hashed_password=record[5],
-                            role=record[6]
+                            role=record[6],
                         )
                         for record in records
                     ]
