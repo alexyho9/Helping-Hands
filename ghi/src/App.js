@@ -6,6 +6,8 @@ import ListEvents from "./events/ListEvents.js";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EventDetails from "./events/EventDetails";
+import CreateEvent from "./events/CreateEvent";
+
 import ListMeals from "./meals/ListMeals";
 import LoginForm from "./users/LoginForm";
 import SignupForm from "./users/SignUpForm";
@@ -32,6 +34,7 @@ function App() {
       <Routes>
         <Route path="events" element={<ListEvents />} />
         <Route path="events/:id" element={<EventDetails />} />
+        <Route path="events/create" element={<CreateEvent/>}/>
         <Route path="login" element={<LoginForm />} />
         <Route path="meals" element={<ListMeals />} />
         <Route path="signup" element={<SignupForm />} />
