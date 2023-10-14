@@ -66,7 +66,7 @@ def delete_meal(
         return "You need to log in to view this"
 
 
-@router.get("/api/meal/{meal_id}", response_model=Optional[MealOut])
+@router.get("/api/meals/{meal_id}", response_model=Optional[MealOut])
 def get_meal(
     meal_id: int,
     response: Response,

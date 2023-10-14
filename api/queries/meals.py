@@ -11,8 +11,8 @@ class Error(BaseModel):
 class MealIn(BaseModel):
     title: str
     date: date
-    description: str
-    image_url: str
+    description: Optional[str]
+    image_url: Optional[str]
     capacity: int
 
 
@@ -20,8 +20,8 @@ class MealOut(BaseModel):
     id: int
     title: str
     date: date
-    description: str
-    image_url: str
+    description: Optional[str]
+    image_url: Optional[str]
     capacity: int
 
 
