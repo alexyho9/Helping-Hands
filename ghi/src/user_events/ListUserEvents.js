@@ -6,7 +6,6 @@ function ListUserEvents({ userId }) {
   const [userEvents, setUserEvents] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [filteredUserEvents, setFilteredUserEvents] = useState([]);
-  console.log(userId)
   useEffect(() => {
     if (userId && token) {
       fetchUserEvents(userId);
@@ -27,7 +26,8 @@ function ListUserEvents({ userId }) {
       console.error(error);
     }
   };
-
+  
+  console.log(userEvents)
   const handleSearchInputChange = (e) => {
     const inputValue = e.target.value;
     setSearchInput(inputValue);
@@ -40,6 +40,7 @@ function ListUserEvents({ userId }) {
       setFilteredUserEvents(filtered);
     }
   };
+
 
 
   return (

@@ -33,7 +33,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="events" element={<ListEvents />} />
-        <Route path="events/:id" element={<EventDetails />} />
+        <Route path="events/:id" element={<EventDetails userId={userId} />} />
         <Route path="events/create" element={<CreateEvent/>}/>
         <Route path="login" element={<LoginForm />} />
         <Route path="meals" element={<ListMeals />} />
