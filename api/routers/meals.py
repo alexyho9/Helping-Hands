@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Response, status, HTTPException
 from typing import List, Optional, Union
 from queries.meals import Error, MealIn, MealOut, MealQueries
 from queries.users import UserOut
@@ -13,6 +13,12 @@ def get_current_user(
     return user
 
 
+def is_admin(user: UserOut = Depends(authenticator.get_current_account_data)):
+    if user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not Authorized")
+    return user
+
+
 @router.post(
     "/api/meals/",
     response_model=Union[MealOut, Error],
@@ -21,7 +27,7 @@ def get_current_user(
 def create_meal(
     meal: MealIn,
     response: Response,
-    current_user: UserOut = Depends(get_current_user),
+    current_user: UserOut = Depends(is_admin),
     query: MealQueries = Depends(),
 ):
     if current_user:
@@ -40,7 +46,7 @@ def create_meal(
 def update_meal(
     meal: MealIn,
     meal_id: int,
-    current_user: UserOut = Depends(get_current_user),
+    current_user: UserOut = Depends(is_admin),
     query: MealQueries = Depends(),
 ) -> Union[MealOut, Error]:
     if current_user:
@@ -57,7 +63,7 @@ def get_all_meals(query: MealQueries = Depends()):
 @router.delete("/api/meals/{meal_id}", response_model=bool)
 def delete_meal(
     meal_id: int,
-    current_user: UserOut = Depends(get_current_user),
+    current_user: UserOut = Depends(is_admin),
     query: MealQueries = Depends(),
 ) -> bool:
     if current_user:

@@ -44,8 +44,7 @@ class ReservationQueries:
                     )
                     existing_reservation = db.fetchone()
                     if existing_reservation:
-                        raise DuplicationReservationError
-                    ("Phone number already exists")
+                        raise DuplicationReservationError("Duplicate")
                     db.execute(
                         """
                         INSERT INTO reservations
@@ -67,7 +66,7 @@ class ReservationQueries:
                         first_name=row[1],
                         last_name=row[2],
                         phone=row[3],
-                        meal_id=row[4]
+                        meal_id=row[4],
                     )
         except DuplicationReservationError as e:
             return {"message": str(e)}
@@ -111,9 +110,33 @@ class ReservationQueries:
                             first_name=record[1],
                             last_name=record[2],
                             phone=record[3],
-                            meal_id=record[4]
+                            meal_id=record[4],
                         )
                         for record in db
                     ]
         except Exception:
             return {"message": "Could not get all meal reservations"}
+
+    def get_all_reservations(self) -> Union[List[ReservationOut], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT *
+                        FROM reservations
+                        ORDER BY meal_id, id
+                        """
+                    )
+                    return [
+                        ReservationOut(
+                            id=record[0],
+                            first_name=record[1],
+                            last_name=record[2],
+                            phone=record[3],
+                            meal_id=record[4],
+                        )
+                        for record in db
+                    ]
+        except Exception:
+            return {"message": "Could not get all reservations"}

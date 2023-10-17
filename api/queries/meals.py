@@ -43,8 +43,8 @@ class MealQueries:
                             meal.date,
                             meal.description,
                             meal.image_url,
-                            meal.capacity
-                        ]
+                            meal.capacity,
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.meal_in_to_out(id, meal)
@@ -71,8 +71,8 @@ class MealQueries:
                             meal.description,
                             meal.image_url,
                             meal.capacity,
-                            meal_id
-                        ]
+                            meal_id,
+                        ],
                     )
                 return self.meal_in_to_out(meal_id, meal)
         except Exception:
@@ -96,7 +96,7 @@ class MealQueries:
                             date=record[2],
                             description=record[3],
                             image_url=record[4],
-                            capacity=record[5]
+                            capacity=record[5],
                         )
                         for record in db
                     ]
@@ -112,7 +112,7 @@ class MealQueries:
                         DELETE FROM meals
                         WHERE id = %s
                         """,
-                        [meal_id]
+                        [meal_id],
                     )
                     return True
         except Exception as e:
@@ -129,7 +129,7 @@ class MealQueries:
                         FROM meals
                         WHERE id = %s
                         """,
-                        [meal_id]
+                        [meal_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -150,5 +150,5 @@ class MealQueries:
             date=record[2],
             description=record[3],
             image_url=record[4],
-            capacity=record[5]
+            capacity=record[5],
         )

@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from typing import List, Union
+from queries.users import UserOut
+from authenticator import authenticator
 from queries.reservations import (
     Error,
     ReservationIn,
@@ -9,6 +11,12 @@ from queries.reservations import (
 
 
 router = APIRouter()
+
+
+def is_admin(user: UserOut = Depends(authenticator.get_current_account_data)):
+    if user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not Authorized")
+    return user
 
 
 @router.post("/api/meals/{meal_id}/reservations/")
@@ -30,7 +38,17 @@ def get_reservations_by_meal(
 
 @router.delete("/api/reservations/{reservation_id}")
 def delete_reservation(
-    reservation_id: int,
-    query: ReservationQueries = Depends()
+    reservation_id: int, query: ReservationQueries = Depends()
 ) -> bool:
     return query.delete_reservation(reservation_id)
+
+
+@router.get("/api/reservations/")
+def get_all_reservations(
+    current_user: UserOut = Depends(is_admin),
+    query: ReservationQueries = Depends(),
+):
+    if current_user:
+        return query.get_all_reservations()
+    else:
+        return "You need to be an ADMIN to view this"

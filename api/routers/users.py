@@ -42,6 +42,15 @@ def get_current_user(
     return user
 
 
+def is_admin(user: UserOut = Depends(authenticator.get_current_account_data)):
+    if user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not Authorized")
+    return user
+
+
+ADMIN_TOKEN = "LH6JAWM8"
+
+
 @router.get("/token", response_model=UserToken | None)
 async def get_token(
     request: Request,
@@ -62,6 +71,9 @@ async def create_user(
     response: Response,
     query: UserQueries = Depends(),
 ):
+    if info.role == "admin":
+        if info.admin_token != ADMIN_TOKEN:
+            raise HTTPException(status_code=403, detail="Invalid admin token")
     hashed_password = authenticator.hash_password(info.password)
     try:
         user = query.create_user(info, hashed_password)
@@ -77,25 +89,25 @@ async def create_user(
 
 @router.get("/api/users/", response_model=Union[List[UserOut], Error])
 def get_all_users(
-    current_user: UserOut = Depends(get_current_user),
+    current_user: UserOut = Depends(is_admin),
     query: UserQueries = Depends(),
 ):
     if current_user:
         return query.get_all_users()
     else:
-        return "You need to log in to view this"
+        return "You need to be an ADMIN to view this"
 
 
 @router.delete("/api/users/{username}", response_model=bool)
 def delete_user(
     username: str,
-    current_user: UserOut = Depends(get_current_user),
+    current_user: UserOut = Depends(is_admin),
     query: UserQueries = Depends(),
 ):
     if current_user:
         return query.delete_user(username)
     else:
-        return "You need to log in to view this"
+        return "You need to be an ADMIN to view this"
 
 
 @router.put("/api/users/{username}", response_model=Union[UserOut, Error])

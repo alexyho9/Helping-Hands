@@ -18,6 +18,7 @@ class UserIn(BaseModel):
     email: str
     password: str
     role: str
+    admin_token: Optional[str]
 
 
 class UserOut(BaseModel):
