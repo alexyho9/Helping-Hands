@@ -9,7 +9,7 @@ import ListUserEvents from "./user_events/ListUserEvents";
 import ListMeals from "./meals/ListMeals";
 import LoginForm from "./users/LoginForm";
 import SignupForm from "./users/SignUpForm";
-import SignupForm1 from "./users/test";
+
 
 function App() {
 
@@ -32,7 +32,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="test" element={< SignupForm1 />} />
         <Route path="events" element={<ListEvents />} />
         <Route path="events/:id" element={<EventDetails />} />
         <Route path="events/create" element={<CreateEvent/>}/>

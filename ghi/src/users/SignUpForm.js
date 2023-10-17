@@ -1,15 +1,27 @@
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 
-const SignupForm = () => {
+const SignupForm1 = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [role, setRole] = useState("");
-  const [showModal, setShowModal] = useState(false);
   const { register } = useToken();
   const navigate = useNavigate();
 
@@ -17,21 +29,13 @@ const SignupForm = () => {
   const handleRegistration = (e) => {
     e.preventDefault();
 
-
-    if (!username || !password || !email || !firstName || !lastName || !role) {
-
-      setShowModal(true);
-      return;
-    }
-
-
     const UserData = {
       first_name: firstName,
       last_name: lastName,
       username: username,
       email: email,
       password: password,
-      role: role,
+      role: "User",
     };
 
     register(UserData, `${process.env.REACT_APP_API_HOST}/api/users`);
@@ -39,103 +43,136 @@ const SignupForm = () => {
     navigate("/events");
   };
 
+function Copyright(props) {
   return (
-    <div>
-      <div>
-        <h2>Create Account</h2>
-        <form onSubmit={(e) => handleRegistration(e)}>
-          <div>
-            <label>
-              First Name
-            </label>
-            <input
-              name="firstName"
-              type="text"
-              onChange={(e) => {
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout">
+        Helping Hands
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+const defaultTheme = createTheme();
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate onSubmit={(e) => handleRegistration(e)} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  onChange={(e) => {
                 setFirstName(e.target.value);
               }}
-            />
-          </div>
-          <div>
-            <label>
-              Last Name
-            </label>
-            <input
-              name="lastName"
-              type="text"
-              onChange={(e) => {
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  onChange={(e) => {
                 setLastName(e.target.value);
               }}
-            />
-          </div>
-          <div>
-            <label>
-              Username
-            </label>
-            <input
-              name="username"
-              type="text"
-              onChange={(e) => {
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={(e) => {
                 setUsername(e.target.value);
               }}
-            />
-          </div>
-          <div>
-            <label>
-              Password
-            </label>
-            <input
-              name="password"
-              type="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-          <div>
-            <label>
-              Email
-            </label>
-            <input
-              name="email"
-              type="text"
-              onChange={(e) => {
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onChange={(e) => {
                 setEmail(e.target.value);
               }}
-            />
-          </div>
-          <div>
-            <label>
-              Role
-            </label>
-            <input
-              name="role"
-              type="text"
-              onChange={(e) => {
-                setRole(e.target.value);
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  onChange={(e) => {
+                setPassword(e.target.value);
               }}
-            />
-          </div>
-          <div>
-            <button>Register</button>
-          </div>
-        </form>
-      </div>
-      {showModal && (
-        <div>
-          <div>
-            <div>
-              <div>
-                <p>This field should not be null</p>
-                <button onClick={() => setShowModal(false)}>
-                </button>
-              </div>
-              <p>Please fill out all required fields.</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  label="I want to receive updates on events and volunteer opportunities."
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="http://localhost:3000/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </ThemeProvider>
+  );
 }
-export default SignupForm
+
+export default SignupForm1
