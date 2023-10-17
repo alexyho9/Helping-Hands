@@ -127,9 +127,7 @@ const SignupForm = () => {
             <div>
               <div>
                 <p>This field should not be null</p>
-                <button
-                  onClick={() => setShowModal(false)}
-                >
+                <button onClick={() => setShowModal(false)}>
                 </button>
               </div>
               <p>Please fill out all required fields.</p>
