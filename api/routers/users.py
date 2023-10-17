@@ -131,3 +131,11 @@ def get_user_by_username(
         if user is None:
             raise HTTPException(status_code=404, detail="Invalid user")
         return user
+
+
+@router.get("/api/userdata", response_model=UserOut | None)
+async def get_account_data(
+    user: UserOut = Depends(authenticator.try_get_current_account_data),
+) -> UserOut | None:
+    if user:
+        return UserOut(**user)

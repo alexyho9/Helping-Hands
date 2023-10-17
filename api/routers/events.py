@@ -11,10 +11,18 @@ from authenticator import authenticator
 
 router = APIRouter()
 
-def get_current_user(user: UserOut = Depends(authenticator.get_current_account_data)):
+
+def get_current_user(
+        user: UserOut = Depends(authenticator.get_current_account_data)
+        ):
     return user
 
-@router.post("/api/events/", response_model=Union[EventOut, Error], status_code=status.HTTP_201_CREATED)
+
+@router.post(
+        "/api/events/",
+        response_model=Union[EventOut, Error],
+        status_code=status.HTTP_201_CREATED
+        )
 def create_event(
     event: EventIn,
     response: Response,
@@ -32,6 +40,7 @@ def create_event(
     else:
         return "You need to log in to create an event"
 
+
 @router.put("/api/events/{event_id}", response_model=Union[EventOut, Error])
 def update_event(
     event: EventIn,
@@ -41,6 +50,7 @@ def update_event(
 ) -> Union[Error, EventOut]:
     if current_user:
         return query.update(event_id, event)
+
 
 @router.get("/api/events/", response_model=Union[List[EventOut], Error])
 def get_all_events(
@@ -52,6 +62,7 @@ def get_all_events(
     else:
         return "You need to log in to view this"
 
+
 @router.delete("/api/events/{event_id}", response_model=bool)
 def delete_event(
     event_id: int,
@@ -60,6 +71,7 @@ def delete_event(
 ) -> bool:
     if current_user:
         return query.delete_event(event_id)
+
 
 @router.get("/api/events/{event_id}", response_model=Optional[EventOut])
 def get_event(

@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import List, Union
-from datetime import date
 from queries.pool import pool
 
 
@@ -65,7 +64,7 @@ class UserEventQueries:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result = db.execute(
+                    db.execute(
                         """
                         SELECT *
                         FROM user_events

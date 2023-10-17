@@ -7,28 +7,29 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EventDetails from "./events/EventDetails";
 import CreateEvent from "./events/CreateEvent";
-
+import ListUserEvents from "./user_events/ListUserEvents";
 import ListMeals from "./meals/ListMeals";
 import LoginForm from "./users/LoginForm";
 import SignupForm from "./users/SignUpForm";
 
 function App() {
-  const { token, fetchWithCookie } = useToken();
-  const [user, setUser] = useState({});
-  const fetchLoggedInUser = async () => {
+  
+  const [userId, setUserId] = useState("");
+  const { fetchWithToken, token } = useToken();
+  const getAccountData = async () => {
     if (token) {
-      const newToken = await fetchWithCookie(
-        `${process.env.REACT_APP_API_HOST}/token`
+      const response = await fetchWithToken(
+        `${process.env.REACT_APP_API_HOST}/api/userdata`
       );
-
-      const account = newToken.account;
-      setUser(account);
+      setUserId(response["id"]);
+    } else {
+      setUserId(null);
     }
   };
-
   useEffect(() => {
-    fetchLoggedInUser();
+    getAccountData();
   }, [token]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -38,6 +39,7 @@ function App() {
         <Route path="login" element={<LoginForm />} />
         <Route path="meals" element={<ListMeals />} />
         <Route path="signup" element={<SignupForm />} />
+        <Route path="user/events" element = {<ListUserEvents userId={userId}/>}/>
       </Routes>
     </BrowserRouter>
   );
