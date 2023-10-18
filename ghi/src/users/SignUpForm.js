@@ -43,7 +43,7 @@ const SignupForm1 = () => {
   };
   function Copyright(props) {
     return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      <Typography variant="body2" color="white" align="center" {...props}>
         {'Copyright © '}
         <Link color="inherit" href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout">
           Helping Hands
@@ -93,7 +93,7 @@ const SignupForm1 = () => {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <HandshakeTwoToneIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography color="white" component="h1" variant="h5">
               Sign up
             </Typography>
           </Box>
@@ -173,8 +173,9 @@ const SignupForm1 = () => {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
+                  sx={{color:"white"}}
                   control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
+                    <Checkbox sx={{color:"white"}} value="allowExtraEmails" color="primary" />
                   }
                   label="I want to receive updates on events and volunteer opportunities."
                 />
@@ -204,6 +205,3 @@ const SignupForm1 = () => {
 };
 
 export default SignupForm1;
-
-
-
