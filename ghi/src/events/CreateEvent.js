@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function CreateEvent() {
-  const { token } = useToken();
+  const { token , fetchWithToken} = useToken();
   const navigate = useNavigate();
 
   const [eventName, setEventName] = useState("");
@@ -11,15 +11,32 @@ function CreateEvent() {
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    if (token) {
+      fetchEvents();
+    }
+  }, [token]);
+  const fetchEvents = async () => {
+    const url = `${process.env.REACT_APP_API_HOST}/api/events/`;
+    try {
+      const data = await fetchWithToken(url);
+      setEvents(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleEventNameChange = (e) => setEventName(e.target.value);
   const handlePictureUrlChange = (e) => setPictureUrl(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
   const handleLocationChange = (e) => setLocation(e.target.value);
   const handleDateChange = (e) => setDate(e.target.value);
-
+  const isNameDuplicated =
+    eventName && events.some((event) => event.event_name === eventName);
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
 
 
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -27,6 +44,12 @@ function CreateEvent() {
       alert("Invalid date format. Please use YYYY-MM-DD.");
       return;
     }
+    if (isNameDuplicated){
+      alert("This is the name of an already exisiting event")
+      return;
+    }
+
+    
 
     const data = {
       event_name: eventName,
@@ -148,3 +171,4 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
+

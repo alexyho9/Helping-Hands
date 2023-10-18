@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import EventCard from "./EventCard";
-import "./ListEvents.css";
+
 import { Link } from "react-router-dom";
 
 function ListEvents() {

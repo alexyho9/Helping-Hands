@@ -1,17 +1,17 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import HandshakeTwoToneIcon from '@mui/icons-material/HandshakeTwoTone';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import HandshakeTwoToneIcon from "@mui/icons-material/HandshakeTwoTone";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,6 @@ const SignupForm1 = () => {
   const [lastName, setLastName] = useState("");
   const { register } = useToken();
   const navigate = useNavigate();
-
 
   const handleRegistration = (e) => {
     e.preventDefault();
@@ -42,41 +41,68 @@ const SignupForm1 = () => {
     e.target.reset();
     navigate("/events");
   };
+  function Copyright(props) {
+    return (
+      <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout">
+          Helping Hands
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
 
-function Copyright(props) {
+  const customTheme = createTheme({
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "rgba(255, 255, 255, 1.0)",
+          },
+        },
+      },
+    },
+  });
+
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout">
-        Helping Hands
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const defaultTheme = createTheme();
-
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <HandshakeTwoToneIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate onSubmit={(e) => handleRegistration(e)} sx={{ mt: 3 }}>
+    <ThemeProvider theme={customTheme}>
+      <CssBaseline />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          minHeight: "100vh",
+          backgroundImage:
+            'url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/73f385ae-e909-46b9-9faf-57dc2b09b346/dddraqt-f69a79cb-7e12-4a0c-b581-2dba06365070.png/v1/fill/w_1280,h_720,q_80,strp/black_material_ui_background_by_ministerkraft_dddraqt-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvNzNmMzg1YWUtZTkwOS00NmI5LTlmYWYtNTdkYzJiMDliMzQ2XC9kZGRyYXF0LWY2OWE3OWNiLTdlMTItNGEwYy1iNTgxLTJkYmEwNjM2NTA3MC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.UtzmPfYs0s4-l9mf1__EQeo_Pg2fsrHUJZZoqPzIU3M")',
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <Container component="main" maxWidth="xs">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mt: 8,
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <HandshakeTwoToneIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+          </Box>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={(e) => handleRegistration(e)}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -87,8 +113,8 @@ const defaultTheme = createTheme();
                   id="firstName"
                   label="First Name"
                   onChange={(e) => {
-                setFirstName(e.target.value);
-              }}
+                    setFirstName(e.target.value);
+                  }}
                   autoFocus
                 />
               </Grid>
@@ -100,8 +126,8 @@ const defaultTheme = createTheme();
                   label="Last Name"
                   name="lastName"
                   onChange={(e) => {
-                setLastName(e.target.value);
-              }}
+                    setLastName(e.target.value);
+                  }}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -114,8 +140,8 @@ const defaultTheme = createTheme();
                   name="username"
                   autoComplete="username"
                   onChange={(e) => {
-                setUsername(e.target.value);
-              }}
+                    setUsername(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -127,8 +153,8 @@ const defaultTheme = createTheme();
                   name="email"
                   autoComplete="email"
                   onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+                    setEmail(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -141,13 +167,15 @@ const defaultTheme = createTheme();
                   id="password"
                   autoComplete="new-password"
                   onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+                    setPassword(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
                   label="I want to receive updates on events and volunteer opportunities."
                 />
               </Grid>
@@ -168,11 +196,14 @@ const defaultTheme = createTheme();
               </Grid>
             </Grid>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
+          <Copyright sx={{ mt: 5 }} />
+        </Container>
+      </Box>
     </ThemeProvider>
   );
-}
+};
 
-export default SignupForm1
+export default SignupForm1;
+
+
+
