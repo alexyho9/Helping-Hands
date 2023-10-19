@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function CreateEvent() {
-  const { token , fetchWithToken} = useToken();
+  const { token, fetchWithToken } = useToken();
   const navigate = useNavigate();
 
   const [eventName, setEventName] = useState("");
@@ -16,7 +16,7 @@ function CreateEvent() {
     if (token) {
       fetchEvents();
     }
-  }, [token]);
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
   const fetchEvents = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/`;
     try {
@@ -36,20 +36,16 @@ function CreateEvent() {
     eventName && events.some((event) => event.event_name === eventName);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-
 
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     if (!date.match(datePattern)) {
       alert("Invalid date format. Please use YYYY-MM-DD.");
       return;
     }
-    if (isNameDuplicated){
-      alert("This is the name of an already exisiting event")
+    if (isNameDuplicated) {
+      alert("This is the name of an already exisiting event");
       return;
     }
-
-    
 
     const data = {
       event_name: eventName,
@@ -171,4 +167,3 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
-

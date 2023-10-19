@@ -35,7 +35,7 @@ const MealDetails = () => {
   useEffect(() => {
     getMeals();
     getReservations();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>

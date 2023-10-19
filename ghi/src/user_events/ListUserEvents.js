@@ -10,7 +10,7 @@ function ListUserEvents({ userId }) {
     if (userId && token) {
       fetchUserEvents(userId);
     }
-  }, [token, userId]);
+  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setFilteredUserEvents(userEvents);
@@ -26,22 +26,20 @@ function ListUserEvents({ userId }) {
       console.error(error);
     }
   };
-  
-  console.log(userEvents)
+
+  console.log(userEvents);
   const handleSearchInputChange = (e) => {
     const inputValue = e.target.value;
     setSearchInput(inputValue);
 
     if (userEvents) {
       const filtered = userEvents.filter((event) => {
-        const eventId = event.event_id || ""; 
+        const eventId = event.event_id || "";
         return eventId.toLowerCase().includes(inputValue.toLowerCase());
       });
       setFilteredUserEvents(filtered);
     }
   };
-
-
 
   return (
     <div className="background">

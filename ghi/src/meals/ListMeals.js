@@ -6,7 +6,9 @@ const ListMeals = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/meals");
+        const response = await fetch(
+          `${process.env.REACT_APP_API_HOST}/api/meals`
+        );
         if (response.ok) {
           const data = await response.json();
           setMealsList(data);

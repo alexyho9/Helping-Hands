@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import './EventDetails.css'
+import "./EventDetails.css";
 import SignUpButton from "./SignUpButton";
 import {
   Container,
@@ -19,7 +19,7 @@ function EventDetails({ userId }) {
   const { token, fetchWithToken } = useToken();
   const [event, setEvent] = useState(null);
   const [userEvents, setUserEvents] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchEventDetails = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/${id}`;
@@ -35,7 +35,7 @@ function EventDetails({ userId }) {
     if (userId && token) {
       fetchUserEvents(userId);
     }
-  }, [token, userId]);
+  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserEvents = async (userId) => {
     const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events?user_id=${userId}`;
@@ -67,7 +67,7 @@ function EventDetails({ userId }) {
       if (response.ok) {
         console.log("Successfully signed up for the event.");
         fetchEventDetails();
-        navigate("/user/events")
+        navigate("/user/events");
       } else {
         console.error("Error signing up for the event.");
         alert("Failed to sign up for the event. Please try again.");
@@ -82,7 +82,7 @@ function EventDetails({ userId }) {
     if (token) {
       fetchEventDetails();
     }
-  }, [id, token]);
+  }, [id, token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Box

@@ -13,6 +13,9 @@ import LoginForm from "./users/LoginForm";
 import SignupForm from "./users/SignUpForm";
 
 function App() {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
+
   const [userId, setUserId] = useState("");
   const { fetchWithToken, token } = useToken();
   const getAccountData = async () => {
@@ -27,10 +30,10 @@ function App() {
   };
   useEffect(() => {
     getAccountData();
-  }, [token]);
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="events" element={<ListEvents />} />
         <Route path="events/:id" element={<EventDetails />} />
