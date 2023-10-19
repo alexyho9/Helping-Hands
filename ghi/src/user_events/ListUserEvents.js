@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
+
 function ListUserEvents({ userId }) {
   const { token, fetchWithToken } = useToken();
   const [userEvents, setUserEvents] = useState([]);
@@ -58,7 +59,7 @@ function ListUserEvents({ userId }) {
       fetchUserEvents(userId);
       fetchEvents();
     }
-  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, token]); // eslint-disable-line react-hooks/exhaustive-deps
   const defaultTheme = createTheme();
 
   return (

@@ -11,6 +11,7 @@ import MealDetails from "./meals/MealDetails";
 import CreateMeal from "./meals/CreateMeal";
 import LoginForm from "./users/LoginForm";
 import SignupForm from "./users/SignUpForm";
+import Sidebar from "./Nav/Nav";
 import AdminEvents from "./admin/AdminEvents";
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
           path="user/events"
           element={<ListUserEvents userId={userId} />}
         />
+        <Route path="sidebar" element={<Sidebar/>}/>
         <Route path="admin/events" element={<AdminEvents />} />
       </Routes>
     </BrowserRouter>
