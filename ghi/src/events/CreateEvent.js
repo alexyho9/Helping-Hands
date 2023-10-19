@@ -12,11 +12,7 @@ function CreateEvent() {
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const [events, setEvents] = useState([]);
-  useEffect(() => {
-    if (token) {
-      fetchEvents();
-    }
-  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const fetchEvents = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/`;
     try {
@@ -26,6 +22,12 @@ function CreateEvent() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      fetchEvents();
+    }
+  }); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleEventNameChange = (e) => setEventName(e.target.value);
   const handlePictureUrlChange = (e) => setPictureUrl(e.target.value);

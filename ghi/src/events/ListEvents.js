@@ -19,14 +19,6 @@ function ListEvents() {
   const { token, fetchWithToken } = useToken();
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    if (token) {
-      fetchEvents();
-    }
-  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {}, []);
-
   const fetchEvents = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/`;
     try {
@@ -36,6 +28,11 @@ function ListEvents() {
       console.error(error);
     }
   };
+  useEffect(() => {
+    if (token) {
+      fetchEvents();
+    }
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function Copyright() {
     return (
@@ -52,6 +49,7 @@ function ListEvents() {
       </Typography>
     );
   }
+
 
   const defaultTheme = createTheme();
 
@@ -143,3 +141,5 @@ function ListEvents() {
 }
 
 export default ListEvents;
+
+

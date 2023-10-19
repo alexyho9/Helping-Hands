@@ -25,17 +25,13 @@ function EventDetails({ userId }) {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/${id}`;
     try {
       const data = await fetchWithToken(url);
+
       setEvent(data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    if (userId && token) {
-      fetchUserEvents(userId);
-    }
-  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserEvents = async (userId) => {
     const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events?user_id=${userId}`;
@@ -77,6 +73,11 @@ function EventDetails({ userId }) {
       alert("An error occurred. Please try again later.");
     }
   };
+  useEffect(() => {
+    if (userId && token) {
+      fetchUserEvents(userId);
+    }
+  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (token) {
