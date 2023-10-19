@@ -22,6 +22,9 @@ function CreateEvent() {
       console.error(error);
     }
   };
+  const isNameDuplicated = events.some(
+    (event) => event.event_name === eventName
+  );
 
   useEffect(() => {
     if (token) {
@@ -34,8 +37,7 @@ function CreateEvent() {
   const handleDescriptionChange = (e) => setDescription(e.target.value);
   const handleLocationChange = (e) => setLocation(e.target.value);
   const handleDateChange = (e) => setDate(e.target.value);
-  const isNameDuplicated =
-    eventName && events.some((event) => event.event_name === eventName);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -75,7 +77,7 @@ function CreateEvent() {
         setDescription("");
         setLocation("");
         setDate("");
-        navigate("/events");
+        navigate("/admin/events");
       } else {
         alert("Failed to create the event. Please try again.");
       }

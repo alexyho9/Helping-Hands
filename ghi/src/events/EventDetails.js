@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import "./EventDetails.css";
@@ -21,17 +21,23 @@ function EventDetails({ userId }) {
   const [userEvents, setUserEvents] = useState([]);
   const navigate = useNavigate();
 
-  const fetchEventDetails = async () => {
+  const fetchEventDetails = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/${id}`;
     try {
       const data = await fetchWithToken(url);
-
-      setEvent(data);
+      if (event == null) {
+        setEvent(data);
+      }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [fetchWithToken, id, event]);
 
+  useEffect(() => {
+    if (userId && token) {
+      fetchUserEvents(userId);
+    }
+  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserEvents = async (userId) => {
     const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events?user_id=${userId}`;

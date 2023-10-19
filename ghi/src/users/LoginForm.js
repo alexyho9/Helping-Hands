@@ -32,12 +32,7 @@ const LoginForm = () => {
 
   function Copyright(props) {
     return (
-      <Typography
-        variant="body2"
-        color="white"
-        align="center"
-        {...props}
-      >
+      <Typography variant="body2" color="white" align="center" {...props}>
         {"Copyright © "}
         <Link
           color="inherit"
@@ -50,7 +45,6 @@ const LoginForm = () => {
       </Typography>
     );
   }
-
 
   const customTheme = createTheme({
     components: {
@@ -79,73 +73,79 @@ const LoginForm = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <HandshakeTwoToneIcon />
-          </Avatar>
-          <Typography color="white" component="h1" variant="h5">
-            Sign in
-          </Typography>
+        <Container component="main" maxWidth="xs">
           <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              sx={{color: "white"}}
-              control={<Checkbox sx={{color: "white"}} value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <HandshakeTwoToneIcon />
+            </Avatar>
+            <Typography color="white" component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="http://localhost:3000/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FormControlLabel
+                sx={{ color: "white" }}
+                control={
+                  <Checkbox
+                    sx={{ color: "white" }}
+                    value="remember"
+                    color="primary"
+                  />
+                }
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="http://localhost:3000/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
       </Box>
     </ThemeProvider>
   );

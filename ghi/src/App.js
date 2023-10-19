@@ -4,13 +4,14 @@ import ListEvents from "./events/ListEvents.js";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EventDetails from "./events/EventDetails";
-import CreateEvent from "./events/CreateEvent";
+import CreateEvent from "./admin/CreateEvent";
 import ListUserEvents from "./user_events/ListUserEvents";
 import ListMeals from "./meals/ListMeals";
 import MealDetails from "./meals/MealDetails";
 import CreateMeal from "./meals/CreateMeal";
 import LoginForm from "./users/LoginForm";
 import SignupForm from "./users/SignUpForm";
+import AdminEvents from "./admin/AdminEvents";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -47,6 +48,7 @@ function App() {
           path="user/events"
           element={<ListUserEvents userId={userId} />}
         />
+        <Route path="admin/events" element={<AdminEvents />} />
       </Routes>
     </BrowserRouter>
   );

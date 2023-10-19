@@ -44,12 +44,15 @@ const SignupForm1 = () => {
   function Copyright(props) {
     return (
       <Typography variant="body2" color="white" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout">
+        {"Copyright © "}
+        <Link
+          color="inherit"
+          href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout"
+        >
           Helping Hands
-        </Link>{' '}
+        </Link>{" "}
         {new Date().getFullYear()}
-        {'.'}
+        {"."}
       </Typography>
     );
   }
@@ -173,9 +176,13 @@ const SignupForm1 = () => {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  sx={{color:"white"}}
+                  sx={{ color: "white" }}
                   control={
-                    <Checkbox sx={{color:"white"}} value="allowExtraEmails" color="primary" />
+                    <Checkbox
+                      sx={{ color: "white" }}
+                      value="allowExtraEmails"
+                      color="primary"
+                    />
                   }
                   label="I want to receive updates on events and volunteer opportunities."
                 />
