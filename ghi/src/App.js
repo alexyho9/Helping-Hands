@@ -11,6 +11,7 @@ import MealDetails from "./meals/MealDetails";
 import CreateMeal from "./meals/CreateMeal";
 import LoginForm from "./users/LoginForm";
 import SignupForm from "./users/SignUpForm";
+import MainPage from "./MainPage/MainPage"
 import Sidebar from "./Nav/Nav";
 import AdminEvents from "./admin/AdminEvents";
 
@@ -37,8 +38,9 @@ function App() {
   return (
     <BrowserRouter basename={basename}>
       <Routes>
+        <Route path="/" element={<MainPage />} />
         <Route path="events" element={<ListEvents />} />
-        <Route path="events/:id" element={<EventDetails />} />
+        <Route path="events/:id" element={<EventDetails userId={userId}/>} />
         <Route path="events/create" element={<CreateEvent />} />
         <Route path="login" element={<LoginForm />} />
         <Route path="meals" element={<ListMeals />} />
