@@ -39,7 +39,7 @@ const CreateMeal = () => {
       setDescription("");
       setImageUrl("");
       setCapacity("");
-      navigate("/meals");
+      navigate("/admin/meals");
     }
   };
 
