@@ -33,4 +33,4 @@ class UserAuthenticator(Authenticator):
         return user.username, UserOutWithPassword(**user.dict())
 
 
-authenticator = UserAuthenticator(os.environ["SIGNING_KEY"])
+authenticator = UserAuthenticator(os.environ.get("SIGNING_KEY"))
