@@ -1,4 +1,16 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import HandshakeTwoToneIcon from "@mui/icons-material/HandshakeTwoTone";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
@@ -31,12 +43,6 @@ function CreateEvent() {
       fetchEvents();
     }
   }); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleEventNameChange = (e) => setEventName(e.target.value);
-  const handlePictureUrlChange = (e) => setPictureUrl(e.target.value);
-  const handleDescriptionChange = (e) => setDescription(e.target.value);
-  const handleLocationChange = (e) => setLocation(e.target.value);
-  const handleDateChange = (e) => setDate(e.target.value);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,88 +92,150 @@ function CreateEvent() {
       alert("An error occurred. Please try again later.");
     }
   };
+  function Copyright(props) {
+    return (
+      <Typography variant="body2" color="white" align="center" {...props}>
+        {"Copyright © "}
+        <Link
+          color="inherit"
+          href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout"
+        >
+          Helping Hands
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    );
+  }
+
+  const customTheme = createTheme({
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "rgba(255, 255, 255, 1.0)",
+          },
+        },
+      },
+    },
+  });
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <h1>Create A New Event</h1>
-            <form onSubmit={handleSubmit} id="create-event-form">
-              <div className="form-floating mb-3">
-                <input
-                  value={eventName}
-                  onChange={handleEventNameChange}
-                  placeholder="Event Name"
+    <ThemeProvider theme={customTheme}>
+      <CssBaseline />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          minHeight: "100vh",
+          backgroundImage:
+            'url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/73f385ae-e909-46b9-9faf-57dc2b09b346/dddraqt-f69a79cb-7e12-4a0c-b581-2dba06365070.png/v1/fill/w_1280,h_720,q_80,strp/black_material_ui_background_by_ministerkraft_dddraqt-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvNzNmMzg1YWUtZTkwOS00NmI5LTlmYWYtNTdkYzJiMDliMzQ2XC9kZGRyYXF0LWY2OWE3OWNiLTdlMTItNGEwYy1iNTgxLTJkYmEwNjM2NTA3MC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.UtzmPfYs0s4-l9mf1__EQeo_Pg2fsrHUJZZoqPzIU3M")',
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <Container component="main" maxWidth="xs">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mt: 8,
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <HandshakeTwoToneIcon />
+            </Avatar>
+            <Typography color="white" component="h1" variant="h5">
+              Create A New Event
+            </Typography>
+          </Box>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={(e) => handleSubmit(e)}
+            sx={{ mt: 3 }}
+          >
+              <Grid item xs={12}>
+                <TextField
                   required
-                  type="text"
-                  name="event_name"
+                  fullWidth
                   id="event_name"
-                  className="form-control"
+                  label="Event Name"
+                  name="event_name"
+                  onChange={(e) => {
+                    setEventName(e.target.value);
+                  }}
                 />
-                <label htmlFor="event_name">Event Name</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={pictureUrl}
-                  onChange={handlePictureUrlChange}
-                  placeholder="Picture Url"
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   required
-                  type="text"
+                  fullWidth
                   name="picture_url"
+                  label="Picture"
+                  type="picture_url"
                   id="picture_url"
-                  className="form-control"
+                  autoComplete="picture_url"
+                  onChange={(e) => {
+                    setPictureUrl(e.target.value);
+                  }}
                 />
-                <label htmlFor="picture_url">Picture Url</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={description}
-                  onChange={handleDescriptionChange}
-                  placeholder="Description"
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   required
-                  type="text"
+                  fullWidth
                   name="description"
+                  label="Description"
+                  type="description"
                   id="description"
-                  className="form-control"
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
                 />
-                <label htmlFor="description">Event Description</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={location}
-                  onChange={handleLocationChange}
-                  placeholder="Location"
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   required
-                  type="text"
+                  fullWidth
                   name="location"
+                  label="Location"
+                  type="location"
                   id="location"
-                  className="form-control"
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                  }}
                 />
-                <label htmlFor="location">Location</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={date}
-                  onChange={handleDateChange}
-                  placeholder="Date (YYYY-MM-DD)"
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   required
-                  type="text"
+                  fullWidth
                   name="date"
+                  label=""
+                  type="date"
                   id="date"
-                  className="form-control"
+                  onChange={(e) => {
+                    setDate(e.target.value);
+                  }}
                 />
-                <label htmlFor="date">Date (YYYY-MM-DD)</label>
-              </div>
-              <div>
-                <button className="btn btn-success">Create</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Create
+            </Button>
+          </Box>
+          <Copyright sx={{ mt: 5 }} />
+        </Container>
+      </Box>
+    </ThemeProvider>
   );
-}
+};
 
 export default CreateEvent;
