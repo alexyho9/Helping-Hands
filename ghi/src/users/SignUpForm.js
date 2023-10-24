@@ -39,7 +39,7 @@ const SignupForm1 = () => {
 
     register(UserData, `${process.env.REACT_APP_API_HOST}/api/users`);
     e.target.reset();
-    navigate("/events");
+    navigate("/");
   };
   function Copyright(props) {
     return (
