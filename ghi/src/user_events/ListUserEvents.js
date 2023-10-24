@@ -12,7 +12,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-
 function ListUserEvents({ userId }) {
   const { token, fetchWithToken } = useToken();
   const [userEvents, setUserEvents] = useState([]);
@@ -27,7 +26,7 @@ function ListUserEvents({ userId }) {
       console.error(error);
     }
   };
-
+  console.log(userEvents);
   const fetchEvents = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/`;
     try {
@@ -176,3 +175,4 @@ function ListUserEvents({ userId }) {
 }
 
 export default ListUserEvents;
+

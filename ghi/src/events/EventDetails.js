@@ -79,6 +79,7 @@ function EventDetails({ userId }) {
       alert("An error occurred. Please try again later.");
     }
   };
+
   useEffect(() => {
     if (userId && token) {
       fetchUserEvents(userId);
@@ -98,10 +99,9 @@ function EventDetails({ userId }) {
       alignItems="center"
       minHeight="100vh"
       style={{
-        backgroundImage:
-          'url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/73f385ae-e909-46b9-9faf-57dc2b09b346/dddraqt-f69a79cb-7e12-4a0c-b581-2dba06365070.png/v1/fill/w_1280,h_720,q_80,strp/black_material_ui_background_by_ministerkraft_dddraqt-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvNzNmMzg1YWUtZTkwOS00NmI5LTlmYWYtNTdkYzJiMDliMzQ2XC9kZGRyYXF0LWY2OWE3OWNiLTdlMTItNGEwYy1iNTgxLTJkYmEwNjM2NTA3MC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.UtzmPfYs0s4-l9mf1__EQeo_Pg2fsrHUJZZoqPzIU3M")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        backgroundColor: "#586F7C",
       }}
     >
       <Container maxWidth="lg" sx={{ width: "75%" }}>
@@ -119,7 +119,11 @@ function EventDetails({ userId }) {
               height="100%"
               image={event.picture_url}
             />
-            <CardContent>
+            <CardContent
+              sx={{
+                backgroundColor: "#F4F4F9", // Set the background color
+              }}
+            >
               <Typography
                 variant="h4"
                 component="div"
@@ -176,3 +180,4 @@ function EventDetails({ userId }) {
 }
 
 export default EventDetails;
+

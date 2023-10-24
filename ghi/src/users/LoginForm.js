@@ -27,7 +27,7 @@ const LoginForm = () => {
     login(username, password);
 
     e.target.reset();
-    navigate("/events");
+    navigate("/");
   };
 
   function Copyright(props) {
