@@ -16,7 +16,7 @@ import { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 
-const SignupForm = () => {
+const SignupForm1 = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ const SignupForm = () => {
       role: "User",
     };
 
-    register(UserData, `${process.env.REACT_APP_API_HOST}/api/users`);
+    register(UserData, `${process.env.REACT_APP_API_HOST}/api/users/`);
     e.target.reset();
     navigate("/");
   };
@@ -198,7 +198,7 @@ const SignupForm = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href={`${process.env.PUBLIC_URL}/login`} variant="body2">
+                <Link href= {`${process.env.PUBLIC_URL}/login`} variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -211,4 +211,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignupForm1;

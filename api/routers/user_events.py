@@ -40,7 +40,7 @@ def create_user_event(
 
 
 @router.get(
-    "/api/user/events/my-events/",
+    "/api/user/events/my-events",
     response_model=Union[List[UserEventOut], Error],
 )
 def get_all_user_events(
@@ -53,7 +53,7 @@ def get_all_user_events(
         return "You need to log in to view this"
 
 
-@router.delete("/api/user/events/{user_event_id}/", response_model=bool)
+@router.delete("/api/user/events/{user_event_id}", response_model=bool)
 def delete_user_event(
     user_event_id: int,
     current_user: UserOut = Depends(get_current_user),

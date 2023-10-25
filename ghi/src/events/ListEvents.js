@@ -122,7 +122,7 @@ function ListEvents() {
                     <CardActions>
                       <Button
                         size="small"
-                        href={`${process.env.PUBLIC_URL}/events/${event.id}/`}
+                        href={`${process.env.PUBLIC_URL}events/` + event.id}
                       >
                         {" "}
                         View{" "}
@@ -141,5 +141,3 @@ function ListEvents() {
 }
 
 export default ListEvents;
-
-
