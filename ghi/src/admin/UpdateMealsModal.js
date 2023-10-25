@@ -43,7 +43,7 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
 
     const data = {
       title: title,
-      picture_url: pictureUrl,
+      image_url: pictureUrl,
       description: description,
       capacity: capacity,
       date: date,

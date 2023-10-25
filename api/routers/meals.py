@@ -42,7 +42,7 @@ def create_meal(
         return "You need to log in to create a meal"
 
 
-@router.put("/api/meals/{meal_id}", response_model=Union[MealOut, Error])
+@router.put("/api/meals/{meal_id}/", response_model=Union[MealOut, Error])
 def update_meal(
     meal: MealIn,
     meal_id: int,
@@ -60,7 +60,7 @@ def get_all_meals(query: MealQueries = Depends()):
     return query.get_all_meals()
 
 
-@router.delete("/api/meals/{meal_id}", response_model=bool)
+@router.delete("/api/meals/{meal_id}/", response_model=bool)
 def delete_meal(
     meal_id: int,
     current_user: UserOut = Depends(is_admin),
@@ -72,7 +72,7 @@ def delete_meal(
         return "You need to log in to view this"
 
 
-@router.get("/api/meals/{meal_id}", response_model=Optional[MealOut])
+@router.get("/api/meals/{meal_id}/", response_model=Optional[MealOut])
 def get_meal(
     meal_id: int,
     response: Response,

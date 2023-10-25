@@ -40,7 +40,7 @@ function AdminMeals() {
   };
 
   const handleDelete = async (id) => {
-    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/meals/${id}`;
+    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/meals/${id}/`;
     const fetchConfig = {
       method: "DELETE",
       headers: {
@@ -61,7 +61,7 @@ function AdminMeals() {
       return;
     }
 
-    const updateUrl = `http://localhost:8000/api/meals/${id}`;
+    const updateUrl = `http://localhost:8000/api/meals/${id}/`;
     const fetchConfig = {
       method: "PUT",
       headers: {

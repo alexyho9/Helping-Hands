@@ -36,7 +36,7 @@ def get_reservations_by_meal(
     return query.get_reservations_by_meal(meal_id)
 
 
-@router.delete("/api/reservations/{reservation_id}")
+@router.delete("/api/reservations/{reservation_id}/")
 def delete_reservation(
     reservation_id: int, query: ReservationQueries = Depends()
 ) -> bool:
