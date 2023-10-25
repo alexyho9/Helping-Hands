@@ -137,7 +137,7 @@ const LoginForm = () => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="http://localhost:3000/signup" variant="body2">
+                  <Link href={`${process.env.PUBLIC_URL}/signup`} variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

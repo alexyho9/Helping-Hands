@@ -143,7 +143,7 @@ function ListUserEvents({ userId }) {
                             <Button
                               size="small"
                               href={
-                                "http://localhost:3000/events/" +
+                                `${process.env.PUBLIC_URL}/events/` +
                                 matchingEvent.id
                               }
                             >
@@ -175,4 +175,3 @@ function ListUserEvents({ userId }) {
 }
 
 export default ListUserEvents;
-
