@@ -38,7 +38,7 @@ function ListUserEvents({ userId }) {
   };
 
   const handleDeleteUserEvent = async (userEventId) => {
-    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/user/events/${userEventId}`;
+    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/user/events/${userEventId}/`;
     const fetchConfig = {
       method: "DELETE",
       headers: {
