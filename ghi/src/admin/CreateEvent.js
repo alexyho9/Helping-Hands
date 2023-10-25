@@ -42,7 +42,7 @@ function CreateEvent() {
     if (token) {
       fetchEvents();
     }
-  }); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -157,71 +157,71 @@ function CreateEvent() {
             onSubmit={(e) => handleSubmit(e)}
             sx={{ mt: 3 }}
           >
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="event_name"
-                  label="Event Name"
-                  name="event_name"
-                  onChange={(e) => {
-                    setEventName(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="picture_url"
-                  label="Picture"
-                  type="picture_url"
-                  id="picture_url"
-                  autoComplete="picture_url"
-                  onChange={(e) => {
-                    setPictureUrl(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="description"
-                  label="Description"
-                  type="description"
-                  id="description"
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="location"
-                  label="Location"
-                  type="location"
-                  id="location"
-                  onChange={(e) => {
-                    setLocation(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="date"
-                  label=""
-                  type="date"
-                  id="date"
-                  onChange={(e) => {
-                    setDate(e.target.value);
-                  }}
-                />
-              </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="event_name"
+                label="Event Name"
+                name="event_name"
+                onChange={(e) => {
+                  setEventName(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="picture_url"
+                label="Picture"
+                type="picture_url"
+                id="picture_url"
+                autoComplete="picture_url"
+                onChange={(e) => {
+                  setPictureUrl(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="description"
+                label="Description"
+                type="description"
+                id="description"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="location"
+                label="Location"
+                type="location"
+                id="location"
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="date"
+                label=""
+                type="date"
+                id="date"
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+              />
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -236,6 +236,6 @@ function CreateEvent() {
       </Box>
     </ThemeProvider>
   );
-};
+}
 
 export default CreateEvent;
