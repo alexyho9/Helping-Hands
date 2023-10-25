@@ -22,7 +22,7 @@ function EventDetails({ userId }) {
   const navigate = useNavigate();
 
   const fetchEventDetails = useCallback(async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/events/${id}`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/events/${id}/`;
     try {
       const data = await fetchWithToken(url);
       if (event == null) {
@@ -40,7 +40,7 @@ function EventDetails({ userId }) {
   }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserEvents = async (userId) => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events?user_id=${userId}`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events/?user_id=${userId}`;
     try {
       const data = await fetchWithToken(url);
       setUserEvents(data);
@@ -121,7 +121,7 @@ function EventDetails({ userId }) {
             />
             <CardContent
               sx={{
-                backgroundColor: "#F4F4F9", // Set the background color
+                backgroundColor: "#F4F4F9", 
               }}
             >
               <Typography

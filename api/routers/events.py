@@ -47,7 +47,7 @@ def create_event(
         return "You need to log in to create an event"
 
 
-@router.put("/api/events/{event_id}", response_model=Union[EventOut, Error])
+@router.put("/api/events/{event_id}/", response_model=Union[EventOut, Error])
 def update_event(
     event: EventIn,
     event_id: int,
@@ -69,7 +69,7 @@ def get_all_events(
         return "You need to log in to view this"
 
 
-@router.delete("/api/events/{event_id}", response_model=bool)
+@router.delete("/api/events/{event_id}/", response_model=bool)
 def delete_event(
     event_id: int,
     current_user: UserOut = Depends(is_admin),
@@ -79,7 +79,7 @@ def delete_event(
         return query.delete_event(event_id)
 
 
-@router.get("/api/events/{event_id}", response_model=Optional[EventOut])
+@router.get("/api/events/{event_id}/", response_model=Optional[EventOut])
 def get_event(
     event_id: int,
     response: Response,

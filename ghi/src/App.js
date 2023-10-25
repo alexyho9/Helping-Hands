@@ -41,25 +41,25 @@ function App() {
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <BrowserRouter basename={basename}>
-      <Navbar userRole={userRole}/>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="events" element={<ListEvents />} />
-        <Route path="events/:id" element={<EventDetails userId={userId} />} />
-        <Route path="events/create" element={<CreateEvent />} />
-        <Route path="login" element={<LoginForm />} />
-        <Route path="meals" element={<ListMeals />} />
-        <Route path="meals/:id" element={<MealDetails />} />
-        <Route path="meals/create" element={<CreateMeal />} />
-        <Route path="signup" element={<SignupForm />} />
-        <Route path="admin/meals" element={<AdminMeals />} />
-        <Route
-          path="user/events"
-          element={<ListUserEvents userId={userId} />}
-        />
-        <Route path="admin/events" element={<AdminEvents />} />
-        <Route path="logout" element={<Logout />} />
-      </Routes>
+        <Navbar userRole={userRole} />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="events" element={<ListEvents />} />
+          <Route path="events/:id" element={<EventDetails userId={userId} />} />
+          <Route path="events/create" element={<CreateEvent />} />
+          <Route path="login" element={<LoginForm />} />
+          <Route path="meals" element={<ListMeals />} />
+          <Route path="meals/:id" element={<MealDetails />} />
+          <Route path="meals/create" element={<CreateMeal />} />
+          <Route path="signup" element={<SignupForm />} />
+          <Route path="admin/meals" element={<AdminMeals />} />
+          <Route
+            path="user/events"
+            element={<ListUserEvents userId={userId} />}
+          />
+          <Route path="admin/events" element={<AdminEvents />} />
+          <Route path="logout" element={<Logout />} />
+        </Routes>
     </BrowserRouter>
   );
 }

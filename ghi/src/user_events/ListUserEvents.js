@@ -18,7 +18,7 @@ function ListUserEvents({ userId }) {
   const [events, setEvents] = useState([]);
 
   const fetchUserEvents = async (userId) => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events?user_id=${userId}`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events?user_id=${userId}/`;
     try {
       const data = await fetchWithToken(url);
       setUserEvents(data);
@@ -38,7 +38,7 @@ function ListUserEvents({ userId }) {
   };
 
   const handleDeleteUserEvent = async (userEventId) => {
-    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/user/events/${userEventId}`;
+    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/user/events/${userEventId}/`;
     const fetchConfig = {
       method: "DELETE",
       headers: {

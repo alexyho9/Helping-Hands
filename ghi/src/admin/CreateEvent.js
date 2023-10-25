@@ -42,7 +42,7 @@ function CreateEvent() {
     if (token) {
       fetchEvents();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -65,7 +65,7 @@ function CreateEvent() {
       date: date,
     };
 
-    const EventsUrl = `${process.env.REACT_APP_API_HOST}/api/events`;
+    const EventsUrl = `${process.env.REACT_APP_API_HOST}/api/events/`;
     const fetchConfig = {
       method: "POST",
       body: JSON.stringify(data),
