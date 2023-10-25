@@ -46,31 +46,23 @@ const Navbar = ({ userRole }) => {
           </Typography>
           {token ? (
             <Link
-              href="/logout"
+              href={`${process.env.PUBLIC_URL}/logout`}
               style={{
                 textDecoration: "none",
                 color: "#F4F4F9",
               }}
             >
-              <Button
-                color="inherit"
-                to="/logout"
-                style={{ marginLeft: "10px" }}
-              >
-                Logout
-              </Button>
+             <Button color="inherit">logout</Button>
             </Link>
           ) : (
             <Link
-              href="/login"
+              href={`${process.env.PUBLIC_URL}/login`}
               style={{
                 textDecoration: "none",
                 color: "#F4F4F9",
               }}
             >
-              <Button color="inherit" to="/login">
-                Log In
-              </Button>
+              <Button color="inherit">login</Button>
             </Link>
           )}
         </Toolbar>
@@ -88,7 +80,7 @@ const Navbar = ({ userRole }) => {
             <Divider />
             <ListItem>
               <Link
-                href="/"
+                href={`${process.env.PUBLIC_URL}/`}
                 style={{
                   margin: "16px 0",
                   display: "flex",
@@ -108,7 +100,7 @@ const Navbar = ({ userRole }) => {
             {token && (
               <ListItem>
                 <Link
-                  href="/events"
+                  href={`${process.env.PUBLIC_URL}/events`}
                   style={{
                     margin: "16px 0",
                     display: "flex",
@@ -128,7 +120,7 @@ const Navbar = ({ userRole }) => {
             {token && (
               <ListItem>
                 <Link
-                  href="/user/events/"
+                  href={`${process.env.PUBLIC_URL}/user/events`}
                   style={{
                     margin: "16px 0",
                     display: "flex",
@@ -148,7 +140,7 @@ const Navbar = ({ userRole }) => {
             <Divider />
             <ListItem>
               <Link
-                href="/meals"
+                href={`${process.env.PUBLIC_URL}/meals`}
                 style={{
                   margin: "16px 0",
                   display: "flex",
@@ -169,7 +161,7 @@ const Navbar = ({ userRole }) => {
               <>
                 <ListItem>
                   <Link
-                    href="/meals/create"
+                    href={`${process.env.PUBLIC_URL}/admin/meals`}
                     style={{
                       margin: "16px 0",
                       display: "flex",
@@ -181,13 +173,13 @@ const Navbar = ({ userRole }) => {
                   >
                     <LunchDiningIcon fontSize="large" className="hover-2" />
                     <Typography variant="h6" style={{ paddingTop: "20px" }}>
-                      New Food
+                      Admin Meal
                     </Typography>
                   </Link>
                 </ListItem>
                 <ListItem>
                   <Link
-                    href="/events/create"
+                    href={`${process.env.PUBLIC_URL}/admin/events`}
                     style={{
                       margin: "16px 0",
                       display: "flex",
@@ -200,7 +192,7 @@ const Navbar = ({ userRole }) => {
                     <AddIcon fontSize="large" className="hover-2" />
                     {menuOpen && (
                       <Typography variant="h6" style={{ paddingTop: "20px" }}>
-                        Create An Event
+                        Admin Event
                       </Typography>
                     )}
                   </Link>

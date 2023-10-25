@@ -122,7 +122,7 @@ function ListEvents() {
                     <CardActions>
                       <Button
                         size="small"
-                        href={"http://localhost:3000/events/" + event.id}
+                        href={`${process.env.PUBLIC_URL}/events/` + event.id}
                       >
                         {" "}
                         View{" "}

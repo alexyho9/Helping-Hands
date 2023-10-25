@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Stack from "@mui/material/Stack";
+
 function ListUserEvents({ userId }) {
   const { token, fetchWithToken } = useToken();
   const [userEvents, setUserEvents] = useState([]);
@@ -26,7 +26,7 @@ function ListUserEvents({ userId }) {
       console.error(error);
     }
   };
-  console.log(userEvents);
+
   const fetchEvents = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/`;
     try {
@@ -53,16 +53,36 @@ function ListUserEvents({ userId }) {
       setUserEvents(updatedUserEvents);
     }
   };
+
   useEffect(() => {
     if (userId && token) {
       fetchUserEvents(userId);
       fetchEvents();
     }
   }, [userId, token]); // eslint-disable-line react-hooks/exhaustive-deps
-  const defaultTheme = createTheme();
+
+  const customTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#2F4550",
+      },
+      secondary: {
+        main: "#F4F4F9",
+      },
+      info: {
+        main: "#586F7C",
+      },
+      success: {
+        main: "#B8DBD9",
+      },
+      error: {
+        main: "#000000",
+      },
+    },
+  });
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={customTheme}>
       <div>
         <CssBaseline />
         <main>
@@ -72,34 +92,30 @@ function ListUserEvents({ userId }) {
               flexDirection: "column",
               alignItems: "center",
               minHeight: "100vh",
-              backgroundColor: "#F5F5F5",
+              backgroundColor: customTheme.palette.info.main,
               paddingTop: "80px",
             }}
           >
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            ></Stack>
-            <Container maxWidth="sm">
+            <Container maxWidth="xl">
               <Typography
                 component="h1"
                 variant="h2"
                 align="center"
-                color="#89CFF0"
+                color="secondary"
                 gutterBottom
               >
                 My Events
               </Typography>
             </Container>
-            <Container sx={{ py: 8 }} maxWidth="md">
-              <Grid container spacing={5}>
+            <Container sx={{ py: 8 }} maxWidth={false}>
+              <Grid container spacing={5} justifyContent="center">
                 {userEvents.map((userEvent, index) => {
                   const matchingEvent = events.find(
                     (event) => event.event_name === userEvent.event_id
                   );
                   if (matchingEvent) {
+                    const isPastEvent =
+                      new Date(matchingEvent.date) < new Date();
                     return (
                       <Grid
                         item
@@ -114,17 +130,18 @@ function ListUserEvents({ userId }) {
                             height: "100%",
                             display: "flex",
                             flexDirection: "column",
+                            backgroundColor: customTheme.palette.primary.main,
                           }}
                         >
                           <CardMedia
                             component="div"
                             sx={{
-                              width: "%75",
+                              width: "100%",
                               pt: "56.25%",
                             }}
                             image={matchingEvent.picture_url}
                           />
-                          <CardContent sx={{ flexGrow: 1 }}>
+                          <CardContent sx={{ padding: "8px" }}>
                             <Typography
                               gutterBottom
                               variant="h5"
@@ -139,24 +156,45 @@ function ListUserEvents({ userId }) {
                               {"Date: " + matchingEvent.date}
                             </Typography>
                           </CardContent>
-                          <CardActions>
-                            <Button
-                              size="small"
-                              href={
-                                `${process.env.PUBLIC_URL}/events/` +
-                                matchingEvent.id
-                              }
+                          <CardActions sx={{ marginTop: "auto" }}>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "flex-start",
+                                alignItems: "flex-end",
+                                width: "100%",
+                              }}
                             >
-                              {" View "}
-                            </Button>
-                            <Button
-                              size="small"
-                              onClick={() =>
-                                handleDeleteUserEvent(userEvent.id)
-                              }
-                            >
-                              Cancel
-                            </Button>
+                              <Button
+                                size="small"
+                                href={
+                                  `${process.env.PUBLIC_URL}/events/` +
+                                  matchingEvent.id
+                                }
+                                style={{
+                                  backgroundColor:
+                                    customTheme.palette.success.main,
+                                  color: customTheme.palette.error.main,
+                                }}
+                              >
+                                {" View "}
+                              </Button>
+                              {!isPastEvent && (
+                                <Button
+                                  size="small"
+                                  onClick={() =>
+                                    handleDeleteUserEvent(userEvent.id)
+                                  }
+                                  style={{
+                                    backgroundColor:
+                                      customTheme.palette.error.main,
+                                    color: customTheme.palette.success.main,
+                                  }}
+                                >
+                                  Cancel
+                                </Button>
+                              )}
+                            </div>
                           </CardActions>
                         </Card>
                       </Grid>
