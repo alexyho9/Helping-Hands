@@ -44,7 +44,7 @@ const MealDetails = () => {
   useEffect(() => {
     getMeals();
     getReservations();
-  }, [reservations]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Box
@@ -114,12 +114,6 @@ const MealDetails = () => {
           </CardContent>
 
           <CreateReservation meal_id={id} />
-
-          {/* {isAdmin && (
-            <Box display="flex" justifyContent="center" mt={3}>
-              <Button variant="contained">View Meal Reservations</Button>
-            </Box>
-          )} */}
         </Card>
       </Container>
     </Box>
