@@ -33,11 +33,6 @@ function EventDetails({ userId }) {
     }
   }, [fetchWithToken, id, event]);
 
-  useEffect(() => {
-    if (userId && token) {
-      fetchUserEvents(userId);
-    }
-  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserEvents = async (userId) => {
     const url = `${process.env.REACT_APP_API_HOST}/api/user/events/my-events/?user_id=${userId}`;
@@ -67,7 +62,6 @@ function EventDetails({ userId }) {
       const response = await fetch(EventsUrl, fetchConfig);
 
       if (response.ok) {
-        console.log("Successfully signed up for the event.");
         fetchEventDetails();
         navigate("/user/events");
       } else {
