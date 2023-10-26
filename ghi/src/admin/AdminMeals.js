@@ -3,14 +3,15 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import { Link } from "react-router-dom";
 import UpdateMealsModal from "./UpdateMealsModal";
 import { useNavigate } from "react-router-dom";
+import ReservationsSubMenu from "./ReservationsMenu";
 
 function AdminMeals() {
   const { token, fetchWithToken } = useToken();
   const [meals, setMeals] = useState([]);
   const [showUpdateMealsModal, setShowUpdateMealsModal] = useState(false);
   const [currentMealId, setCurrentMealId] = useState(null);
+  const [openSubMenuMealId, setOpenSubMenuMealId] = useState(null);
   const navigate = useNavigate();
-
   const isAdmin = () => {
     if (!token) {
       return false;
@@ -86,6 +87,10 @@ function AdminMeals() {
     }
   };
 
+  const toggleSubMenu = (mealId) => {
+    setOpenSubMenuMealId(openSubMenuMealId === mealId ? null : mealId);
+  };
+
   return (
     <div className="table table-striped">
       <div id="top-bar">
@@ -108,49 +113,60 @@ function AdminMeals() {
           </thead>
           <tbody>
             {meals.map((meal) => (
-              <tr key={meal.id}>
-                <td>{meal.id}</td>
-                <td>{meal.date}</td>
-                <td>{meal.title}</td>
-                <td>{meal.description}</td>
-                <td>{meal.image_url}</td>
-                <td>{meal.capacity}</td>
-                <td>
-                  <Link to={`/meals/${meal.id}`}>View Details</Link>
-                </td>
-                <td>
-                  <button
-                    style={{
-                      backgroundColor: "red",
-                      color: "white",
-                      borderRadius: "12px",
-                      padding: "8px",
-                    }}
-                    name="Delete"
-                    color="red"
-                    className="btn btn-primary"
-                    onClick={() => handleDelete(meal.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-                <td>
-                  <button
-                    style={{
-                      backgroundColor: "red",
-                      color: "white",
-                      borderRadius: "12px",
-                      padding: "8px",
-                    }}
-                    name="Update"
-                    color="red"
-                    className="btn btn-primary"
-                    onClick={() => handleUpdate(meal.id)}
-                  >
-                    Update
-                  </button>
-                </td>
-              </tr>
+              <React.Fragment key={meal.id}>
+                <tr onClick={() => toggleSubMenu(meal.id)}>
+                  <td>{meal.id}</td>
+                  <td>{meal.date}</td>
+                  <td>{meal.title}</td>
+                  <td>{meal.description}</td>
+                  <td>{meal.image_url}</td>
+                  <td>{meal.capacity}</td>
+                  <td>
+                    <Link to={`/meals/${meal.id}`}>View Details</Link>
+                  </td>
+                  <td>
+                    <button
+                      style={{
+                        backgroundColor: "red",
+                        color: "white",
+                        borderRadius: "12px",
+                        padding: "8px",
+                      }}
+                      name="Delete"
+                      color="red"
+                      className="btn btn-primary"
+                      onClick={() => handleDelete(meal.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      style={{
+                        backgroundColor: "red",
+                        color: "white",
+                        borderRadius: "12px",
+                        padding: "8px",
+                      }}
+                      name="Update"
+                      color="red"
+                      className="btn btn-primary"
+                      onClick={() => handleUpdate(meal.id)}
+                    >
+                      Update
+                    </button>
+                  </td>
+                </tr>
+                {openSubMenuMealId === meal.id && (
+                  <React.Fragment>
+                    <tr>
+                      <td colSpan="9">
+                        <ReservationsSubMenu mealId={meal.id} />
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                )}
+              </React.Fragment>
             ))}
           </tbody>
         </table>
@@ -168,4 +184,5 @@ function AdminMeals() {
     </div>
   );
 }
+
 export default AdminMeals;

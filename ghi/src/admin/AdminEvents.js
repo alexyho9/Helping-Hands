@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { Link } from "react-router-dom";
-import "../admin/AdminTable.css";
+import "../admin/styling/AdminTable.css";
 import UpdateModal from "./UpdateModal";
 import { useNavigate } from "react-router-dom";
 
