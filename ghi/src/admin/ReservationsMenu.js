@@ -41,20 +41,22 @@ function ReservationsSubMenu({ mealId }) {
               <td>{reservation.first_name}</td>
               <td>{reservation.last_name}</td>
               <td>{reservation.phone}</td>
-              <button
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  borderRadius: "12px",
-                  padding: "8px",
-                }}
-                name="Delete"
-                color="red"
-                className="btn btn-primary"
-                onClick={() => handleReservationDelete(reservation.id)}
-              >
-                Delete
-              </button>
+              <td>
+                <button
+                  style={{
+                    backgroundColor: "red",
+                    color: "white",
+                    borderRadius: "12px",
+                    padding: "8px",
+                  }}
+                  name="Delete"
+                  color="red"
+                  className="btn btn-primary"
+                  onClick={() => handleReservationDelete(reservation.id)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

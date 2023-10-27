@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { Link } from "react-router-dom";
 import "../admin/styling/AdminTable.css";
-import UpdateModal from "./UpdateModal";
+import UpdateEventModal from "./UpdateEventModal";
 import { useNavigate } from "react-router-dom";
 
 function AdminEvents() {
   const { token, fetchWithToken } = useToken();
   const [events, setEvents] = useState([]);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showUpdateEventModal, setShowUpdateEventModal] = useState(false);
   const [currentEventId, setCurrentEventId] = useState(null);
   const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ function AdminEvents() {
       return;
     }
 
-    const updateUrl = `http://localhost:8000/api/events/${id}`;
+    const updateUrl = `${process.env.REACT_APP_API_HOST}/api/events/${id}`;
     const fetchConfig = {
       method: "PUT",
       headers: {
@@ -76,7 +76,7 @@ function AdminEvents() {
     if (response.ok) {
       const updatedEvents = events.filter((event) => event.id !== id);
       setEvents(updatedEvents);
-      setShowUpdateModal(true);
+      setShowUpdateEventModal(true);
       setCurrentEventId(id);
     } else {
       const errorData = await response.json();
@@ -152,12 +152,12 @@ function AdminEvents() {
             ))}
           </tbody>
         </table>
-        {showUpdateModal && (
-          <UpdateModal
+        {showUpdateEventModal && (
+          <UpdateEventModal
             eventId={currentEventId}
-            closeModal={() => setShowUpdateModal(false)}
+            closeModal={() => setShowUpdateEventModal(false)}
             afterUpdate={() => {
-              setShowUpdateModal(false);
+              setShowUpdateEventModal(false);
               navigate("/admin/events");
             }}
           />

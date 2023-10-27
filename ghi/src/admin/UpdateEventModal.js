@@ -62,13 +62,6 @@ function UpdateEvent({ eventId, closeModal, afterUpdate }) {
     try {
       const response = await fetch(EventsUrl, fetchConfig);
       if (response.ok) {
-        setEventName("");
-        setPictureUrl("");
-        setDescription("");
-        setLocation("");
-        setDate("");
-        closeModal();
-        afterUpdate();
         window.location.reload();
       } else {
         alert("Failed to update the event. Please try again.");

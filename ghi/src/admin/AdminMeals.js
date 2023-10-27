@@ -62,7 +62,7 @@ function AdminMeals() {
       return;
     }
 
-    const updateUrl = `http://localhost:8000/api/meals/${id}/`;
+    const updateUrl = `${process.env.REACT_APP_API_HOST}/api/meals/${id}/`;
     const fetchConfig = {
       method: "PUT",
       headers: {

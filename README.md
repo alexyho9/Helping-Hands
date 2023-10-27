@@ -58,3 +58,7 @@ docker compose up
 
 6. When the Docker containers are running you can open your browser and go to [http://localhost:3000](http://localhost:3000).
    - This will take you to the project home page and you can navigate via the navbar dropdown menu.
+
+## Diagram
+
+![Screenshot_2023-10-27_at_2.08.53_PM](/uploads/5a70108105053f5f8ddbb1a657015cba/Screenshot_2023-10-27_at_2.08.53_PM.png)
