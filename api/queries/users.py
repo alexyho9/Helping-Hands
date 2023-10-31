@@ -18,7 +18,12 @@ class UserIn(BaseModel):
     email: str
     password: str
     role: str
-    admin_token: Optional[str]
+
+
+class UpdateSelf(BaseModel):
+    username: str
+    email: str
+    password: str
 
 
 class UserOut(BaseModel):
@@ -88,14 +93,21 @@ class UserQueries:
         except Exception:
             return {"message": "Could not create a user"}
 
-    def update_user(
+    def update_user_admin(
         self, username: str, user: UserIn, hashed_password: str
     ) -> UserOutWithPassword:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
-                        """
+                        "SELECT 1 FROM users WHERE email = %s AND "
+                        "username != %s",
+                        (user.email, username),
+                    )
+                    if db.fetchone():
+                        return {"message": "Email is already taken"}
+
+                    query_string = """
                         UPDATE users
                         SET first_name = %s,
                             last_name = %s,
@@ -105,27 +117,60 @@ class UserQueries:
                             role = %s
                         WHERE username = %s
                         RETURNING *
-                        """,
-                        [
-                            user.first_name,
-                            user.last_name,
-                            user.username,
-                            user.email,
-                            hashed_password,
-                            user.role,
-                            username,
-                        ],
-                    )
+                        """
+                    params = [
+                        user.first_name,
+                        user.last_name,
+                        user.username,
+                        user.email,
+                        hashed_password,
+                        user.role,
+                        username,
+                    ]
+                    db.execute(query_string, params)
+                    conn.commit()
                     update = db.fetchone()
-                    return UserOutWithPassword(
-                        id=update[0],
-                        first_name=update[1],
-                        last_name=update[2],
-                        username=update[3],
-                        email=update[4],
-                        hashed_password=update[5],
-                        role=update[6],
-                    )
+                    if update is not None:
+                        return UserOutWithPassword(
+                            id=update[0],
+                            first_name=update[1],
+                            last_name=update[2],
+                            username=update[3],
+                            email=update[4],
+                            hashed_password=update[5],
+                            role=update[6],
+                        )
+                    else:
+                        return {"message": "Could not update the user"}
+        except Exception:
+            return {"message": "Could not update the user"}
+
+    def update_user_self(
+        self, username: str, user: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    query_string = """
+                        UPDATE users
+                        SET username = %(new_username)s,
+                            email = %(email)s,
+                            hashed_password = %(hashed_password)s
+                        WHERE username = %(old_username)s
+                    """
+                    params = {
+                        "new_username": user.username,
+                        "email": user.email,
+                        "hashed_password": hashed_password,
+                        "old_username": username,
+                    }
+                    db.execute(query_string, params)
+                    conn.commit()
+                    affected_rows = db.rowcount
+                    if affected_rows > 0:
+                        return {"message": "User updated successfully"}
+                    else:
+                        return {"message": "Could not update the user"}
         except Exception:
             return {"message": "Could not update the user"}
 

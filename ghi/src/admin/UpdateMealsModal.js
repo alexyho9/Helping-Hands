@@ -49,7 +49,7 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
       date: date,
     };
 
-    const MealsUrl = `${process.env.REACT_APP_API_HOST}/api/meals/${mealId}`;
+    const MealsUrl = `${process.env.REACT_APP_API_HOST}/api/meals/${mealId}/`;
     const fetchConfig = {
       method: "PUT",
       body: JSON.stringify(data),

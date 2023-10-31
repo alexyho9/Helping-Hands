@@ -73,6 +73,11 @@ function EventDetails({ userId }) {
       alert("An error occurred. Please try again later.");
     }
   };
+  useEffect(() => {
+    if (userId && token) {
+      fetchUserEvents(userId);
+    }
+  }, [token, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (userId && token) {

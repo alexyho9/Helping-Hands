@@ -50,7 +50,6 @@ function ListEvents() {
     );
   }
 
-
   const defaultTheme = createTheme();
 
   return (

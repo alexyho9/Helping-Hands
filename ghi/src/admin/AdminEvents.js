@@ -41,7 +41,7 @@ function AdminEvents() {
   };
 
   const handleDelete = async (id) => {
-    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/events/${id}`;
+    const deleteUrl = `${process.env.REACT_APP_API_HOST}/api/events/${id}/`;
     const fetchConfig = {
       method: "DELETE",
       headers: {

@@ -49,7 +49,7 @@ function UpdateEvent({ eventId, closeModal, afterUpdate }) {
       date: date,
     };
 
-    const EventsUrl = `${process.env.REACT_APP_API_HOST}/api/events/${eventId}`;
+    const EventsUrl = `${process.env.REACT_APP_API_HOST}/api/events/${eventId}/`;
     const fetchConfig = {
       method: "PUT",
       body: JSON.stringify(data),
