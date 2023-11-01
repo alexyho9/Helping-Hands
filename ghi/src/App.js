@@ -14,6 +14,7 @@ import SignupForm from "./users/SignUpForm";
 import AdminUsers from "./admin/AdminUsers";
 import AdminMeals from "./admin/AdminMeals";
 import AdminEvents from "./admin/AdminEvents";
+import AboutPage from "./info/About";
 import MainPage from "./MainPage/MainPage";
 import Navbar from "./Nav/Nav";
 import Logout from "./users/Logout";
@@ -59,6 +60,7 @@ function App() {
         />
         <Route path="admin/users" element={<AdminUsers />} />
         <Route path="admin/events" element={<AdminEvents />} />
+        <Route path="about" element={<AboutPage />} />
         <Route path="logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>

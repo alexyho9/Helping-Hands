@@ -10,6 +10,7 @@ import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import InfoIcon from "@mui/icons-material/Info";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -52,7 +53,7 @@ const Navbar = ({ userRole }) => {
                 color: "#F4F4F9",
               }}
             >
-             <Button color="inherit">logout</Button>
+              <Button color="inherit">logout</Button>
             </Link>
           ) : (
             <Link
@@ -201,6 +202,24 @@ const Navbar = ({ userRole }) => {
               </>
             )}
             <Divider />
+            <ListItem>
+              <Link
+                href={`${process.env.PUBLIC_URL}/about`}
+                style={{
+                  margin: "16px 0",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#000000",
+                  textDecoration: "none",
+                }}
+              >
+                <InfoIcon fontSize="large" className="hover-2" />
+                <Typography variant="h6" style={{ paddingTop: "20px" }}>
+                  About Us
+                </Typography>
+              </Link>
+            </ListItem>
           </List>
         </div>
       </Drawer>
