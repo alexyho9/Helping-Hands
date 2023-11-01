@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 
 function UpdateMeal({ mealId, closeModal, afterUpdate }) {
   const { token } = useToken();
@@ -80,85 +84,113 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <h1>Update A Meal</h1>
-            <form onSubmit={handleSubmit} id="update-meal-form">
-              <div className="form-floating mb-3">
-                <input
-                  value={title}
-                  onChange={handleTitleChange}
-                  placeholder="Meal Name"
-                  required
-                  type="text"
-                  name="meal_name"
-                  id="meal_name"
-                  className="form-control"
-                />
-                <label htmlFor="meal_name">Meal Name</label>
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={true} // Assume modal should be open when this component renders
+      onClose={closeModal} // Close modal when backdrop is clicked
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={true}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <div className="container">
+            <div className="row">
+              <div className="offset-3 col-6">
+                <div className="shadow p-4 mt-4">
+                  <h1>Update A Meal</h1>
+                  <form onSubmit={handleSubmit} id="update-meal-form">
+                    <div className="form-floating mb-3">
+                      <input
+                        value={title}
+                        onChange={handleTitleChange}
+                        placeholder="Meal Name"
+                        required
+                        type="text"
+                        name="meal_name"
+                        id="meal_name"
+                        className="form-control"
+                      />
+                      <label htmlFor="meal_name">Meal Name</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={pictureUrl}
+                        onChange={handlePictureUrlChange}
+                        placeholder="Picture Url"
+                        required
+                        type="text"
+                        name="picture_url"
+                        id="picture_url"
+                        className="form-control"
+                      />
+                      <label htmlFor="picture_url">Picture Url</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={description}
+                        onChange={handleDescriptionChange}
+                        placeholder="Description"
+                        required
+                        type="text"
+                        name="description"
+                        id="description"
+                        className="form-control"
+                      />
+                      <label htmlFor="description">Meal Description</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={capacity}
+                        onChange={handleCapacityChange}
+                        placeholder="capacity"
+                        required
+                        type="text"
+                        name="capacity"
+                        id="capacity"
+                        className="form-control"
+                      />
+                      <label htmlFor="capacity">Capacity</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={date}
+                        onChange={handleDateChange}
+                        placeholder="Date (YYYY-MM-DD)"
+                        required
+                        type="text"
+                        name="date"
+                        id="date"
+                        className="form-control"
+                      />
+                      <label htmlFor="date">Date (YYYY-MM-DD)</label>
+                    </div>
+                    <div>
+                      <button className="btn btn-success">Update</button>
+                    </div>
+                  </form>
+                </div>
               </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={pictureUrl}
-                  onChange={handlePictureUrlChange}
-                  placeholder="Picture Url"
-                  required
-                  type="text"
-                  name="picture_url"
-                  id="picture_url"
-                  className="form-control"
-                />
-                <label htmlFor="picture_url">Picture Url</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={description}
-                  onChange={handleDescriptionChange}
-                  placeholder="Description"
-                  required
-                  type="text"
-                  name="description"
-                  id="description"
-                  className="form-control"
-                />
-                <label htmlFor="description">Meal Description</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={capacity}
-                  onChange={handleCapacityChange}
-                  placeholder="capacity"
-                  required
-                  type="text"
-                  name="capacity"
-                  id="capaciy"
-                  className="form-control"
-                />
-                <label htmlFor="capacity">Capacity</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={date}
-                  onChange={handleDateChange}
-                  placeholder="Date (YYYY-MM-DD)"
-                  required
-                  type="text"
-                  name="date"
-                  id="date"
-                  className="form-control"
-                />
-                <label htmlFor="date">Date (YYYY-MM-DD)</label>
-              </div>
-              <div>
-                <button className="btn btn-success">Update</button>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Fade>
+    </Modal>
   );
 }
 
