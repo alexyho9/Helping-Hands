@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 import UpdateUsersModal from "./UpdateUsersModal";
+import { Link } from "react-router-dom";
+import UpdateIcon from "@mui/icons-material/Update";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import "./styling/ButtonStyling.css";
 
 function AdminUsers() {
   const { token, fetchWithToken } = useToken();
@@ -9,6 +13,10 @@ function AdminUsers() {
   const [showUpdateUsersModal, setShowUpdateUsersModal] = useState(false);
   const [currentuserUsername, setCurrentuserUsername] = useState(null);
   const navigate = useNavigate();
+  const [sortConfig, setSortConfig] = useState({
+    key: "",
+    direction: "ascending",
+  });
 
   const isAdmin = () => {
     if (!token) {
@@ -51,27 +59,64 @@ function AdminUsers() {
       setusers(updatedusers);
     }
   };
+  const handleSort = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
 
   return (
-    <div className="table table-striped">
+    <div className="table">
       <div id="top-bar">
-        <div id="logo">Helping Hands</div>
+        <h1 className="header">USERS</h1>
       </div>
       <main>
         <table className="admin-table">
           <thead>
             <tr>
-              <th>user ID</th>
-              <th>Frist Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Role</th>
+              <th></th>
+              <th onClick={() => handleSort("id")}>user ID</th>
+              <th onClick={() => handleSort("first_name")}>Frist Name</th>
+              <th onClick={() => handleSort("last_name")}>Last Name</th>
+              <th onClick={() => handleSort("username")}>Username</th>
+              <th onClick={() => handleSort("email")}>Email</th>
+              <th onClick={() => handleSort("role")}>Role</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
+            {users
+              .slice()
+              .sort((a, b) => {
+                if (sortConfig.key === "id") {
+                  return sortConfig.direction === "ascending"
+                    ? a.id - b.id
+                    : b.id - a.id;
+                }
+                if (sortConfig.key === "date") {
+                  const dateA = new Date(a.date);
+                  const dateB = new Date(b.date);
+                  return sortConfig.direction === "ascending"
+                    ? dateA - dateB
+                    : dateB - dateA;
+                }
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                  return sortConfig.direction === "ascending" ? -1 : 1;
+                }
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                  return sortConfig.direction === "ascending" ? 1 : -1;
+                }
+                return 0;
+              })
+              .map((user) => (
+                <React.Fragment key={user.id}></React.Fragment>
+              ))}
             {users.map((user) => (
               <tr key={user.id}>
+                <td></td>
                 <td>{user.id}</td>
                 <td>{user.first_name}</td>
                 <td>{user.last_name}</td>
@@ -79,39 +124,41 @@ function AdminUsers() {
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                  <button
-                    style={{
-                      backgroundColor: "red",
-                      color: "white",
-                      borderRadius: "12px",
-                      padding: "8px",
-                    }}
-                    name="Delete"
-                    color="red"
-                    className="btn btn-primary"
-                    onClick={() => handleDelete(user.username)}
-                  >
-                    Delete
-                  </button>
-                </td>
-                <td>
-                  <button
-                    style={{
-                      backgroundColor: "red",
-                      color: "white",
-                      borderRadius: "12px",
-                      padding: "8px",
-                    }}
-                    name="Update"
-                    color="red"
-                    className="btn btn-primary"
+                  <div
+                    className="update-btn"
                     onClick={() => {
                       setShowUpdateUsersModal(true);
                       setCurrentuserUsername(user.username);
                     }}
                   >
-                    Update
-                  </button>
+                    <div className="qube">
+                      <div className="front">Update</div>
+                      <div className="back">
+                        <Link>
+                          <UpdateIcon
+                            style={{ fontSize: 50, color: "orange" }}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div
+                    className="delete-btn"
+                    onClick={() => handleDelete(user.username)}
+                  >
+                    <div className="qube">
+                      <div className="front">Delete</div>
+                      <div className="back">
+                        <Link>
+                          <DeleteForeverIcon
+                            style={{ fontSize: 50, color: "red" }}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -131,4 +178,5 @@ function AdminUsers() {
     </div>
   );
 }
+
 export default AdminUsers;

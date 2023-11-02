@@ -9,7 +9,6 @@ function ReservationsSubMenu({ mealId }) {
 
   useEffect(() => {
     if (mealId) {
-      // check if mealId is defined before making the request
       fetch(
         `${process.env.REACT_APP_API_HOST}/api/meals/${mealId}/reservations/`
       )

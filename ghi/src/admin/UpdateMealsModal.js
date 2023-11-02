@@ -66,11 +66,6 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
     try {
       const response = await fetch(MealsUrl, fetchConfig);
       if (response.ok) {
-        setTitle("");
-        setPictureUrl("");
-        setDescription("");
-        setCapacity("");
-        setDate("");
         closeModal();
         afterUpdate();
         window.location.reload();
@@ -87,8 +82,8 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      open={true} // Assume modal should be open when this component renders
-      onClose={closeModal} // Close modal when backdrop is clicked
+      open={true}
+      onClose={closeModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{

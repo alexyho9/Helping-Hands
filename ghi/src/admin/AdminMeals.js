@@ -68,36 +68,9 @@ function AdminMeals() {
     }
   };
 
-  const handleUpdate = async (id) => {
-    const mealToUpdate = meals.find((meal) => meal.id === id);
-    if (!mealToUpdate) {
-      alert("Meal not found!");
-      return;
-    }
-
-    const updateUrl = `${process.env.REACT_APP_API_HOST}/api/meals/${id}/`;
-    const fetchConfig = {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(mealToUpdate),
-    };
-
-    const response = await fetch(updateUrl, fetchConfig);
-    if (response.ok) {
-      const updatedMeals = meals.filter((meal) => meal.id !== id);
-      setMeals(updatedMeals);
-      setShowUpdateMealsModal(true);
-      setCurrentMealId(id);
-    } else {
-      const errorData = await response.json();
-      console.error("Update error:", errorData);
-      alert(
-        "Failed to update the Meal. Please check the console for more details."
-      );
-    }
+  const handleUpdate = (id) => {
+    setShowUpdateMealsModal(true);
+    setCurrentMealId(id);
   };
   const getReservations = async (mealId) => {
     const url = `${process.env.REACT_APP_API_HOST}/api/meals/${mealId}/reservations/`;
@@ -144,9 +117,9 @@ function AdminMeals() {
   return (
     <div>
       <div className="meals-background-image"></div>
-      <div className="meals-table">
+      <div className="table">
         <div id="top-bar"></div>
-        <h1 className="meals-header">MEALS</h1>
+        <h1 className="header">MEALS</h1>
 
         <main>
           <table className="admin-table">

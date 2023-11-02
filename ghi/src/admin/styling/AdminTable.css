@@ -14,8 +14,8 @@
   font-weight: bold;
 }
 
-.meals-table th,
-.meals-table td {
+.table th,
+.table td {
   padding: 12px 15px;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .reservations,
-.meals-table {
+.table {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -88,7 +88,7 @@
   align-items: center;
 }
 
-.meals-header {
+.header {
   text-align: center;
 }
 .meals-table {

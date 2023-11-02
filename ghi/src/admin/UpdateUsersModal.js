@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 
 function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
   const { token } = useToken();
@@ -72,102 +76,130 @@ function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
   };
 
   return (
-    <div className="container">
-      {isAdmin ? (
-        <div className="row">
-          <div className="offset-3 col-6">
-            <div className="shadow p-4 mt-4">
-              <h1>Update A user</h1>
-              <form onSubmit={handleSubmit} id="update-user-form">
-                <div className="form-floating mb-3">
-                  <input
-                    value={first_name}
-                    onChange={handleFirstNameChange}
-                    placeholder="first_name"
-                    required
-                    type="text"
-                    name="first_name"
-                    id="first_name"
-                    className="form-control"
-                  />
-                  <label htmlFor="user_name">First Name</label>
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={true}
+      onClose={closeModal}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={true}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <div className="container">
+            {isAdmin ? (
+              <div className="row">
+                <div className="offset-3 col-6">
+                  <div className="shadow p-4 mt-4">
+                    <h1>Update A user</h1>
+                    <form onSubmit={handleSubmit} id="update-user-form">
+                      <div className="form-floating mb-3">
+                        <input
+                          value={first_name}
+                          onChange={handleFirstNameChange}
+                          placeholder="first_name"
+                          required
+                          type="text"
+                          name="first_name"
+                          id="first_name"
+                          className="form-control"
+                        />
+                        <label htmlFor="user_name">First Name</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          value={last_name}
+                          onChange={handleLastNameChange}
+                          placeholder="last_name"
+                          required
+                          type="text"
+                          name="last_name"
+                          id="last_name"
+                          className="form-control"
+                        />
+                        <label htmlFor="last_name">Last Name</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          value={newusername}
+                          onChange={handleUsernameChange}
+                          placeholder="username"
+                          required
+                          type="text"
+                          name="username"
+                          id="username"
+                          className="form-control"
+                        />
+                        <label htmlFor="username">user username</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          value={password}
+                          onChange={handlePasswordChange}
+                          placeholder="password"
+                          required
+                          type="password"
+                          name="password"
+                          id="password"
+                          className="form-control"
+                        />
+                        <label htmlFor="username">Password</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          value={email}
+                          onChange={handleEmailChange}
+                          placeholder="email"
+                          required
+                          type="text"
+                          name="email"
+                          id="email"
+                          className="form-control"
+                        />
+                        <label htmlFor="username">Email</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          value={role}
+                          onChange={handleRoleChange}
+                          placeholder="role"
+                          required
+                          type="text"
+                          name="role"
+                          id="capaciy"
+                          className="form-control"
+                        />
+                        <label htmlFor="role">role</label>
+                      </div>
+                      <div>
+                        <button className="btn btn-success">Update</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <div className="form-floating mb-3">
-                  <input
-                    value={last_name}
-                    onChange={handleLastNameChange}
-                    placeholder="last_name"
-                    required
-                    type="text"
-                    name="last_name"
-                    id="last_name"
-                    className="form-control"
-                  />
-                  <label htmlFor="last_name">Last Name</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    value={newusername}
-                    onChange={handleUsernameChange}
-                    placeholder="username"
-                    required
-                    type="text"
-                    name="username"
-                    id="username"
-                    className="form-control"
-                  />
-                  <label htmlFor="username">user username</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    value={password}
-                    onChange={handlePasswordChange}
-                    placeholder="password"
-                    required
-                    type="password"
-                    name="password"
-                    id="password"
-                    className="form-control"
-                  />
-                  <label htmlFor="username">Password</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="email"
-                    required
-                    type="text"
-                    name="email"
-                    id="email"
-                    className="form-control"
-                  />
-                  <label htmlFor="username">Email</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    value={role}
-                    onChange={handleRoleChange}
-                    placeholder="role"
-                    required
-                    type="text"
-                    name="role"
-                    id="capaciy"
-                    className="form-control"
-                  />
-                  <label htmlFor="role">role</label>
-                </div>
-                <div>
-                  <button className="btn btn-success">Update</button>
-                </div>
-              </form>
-            </div>
+              </div>
+            ) : (
+              <p>You don't have the permissions to access this page.</p>
+            )}
           </div>
-        </div>
-      ) : (
-        <p>You don't have the permissions to access this page.</p>
-      )}
-    </div>
+        </Box>
+      </Fade>
+    </Modal>
   );
 }
 
