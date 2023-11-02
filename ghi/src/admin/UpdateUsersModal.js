@@ -77,6 +77,7 @@ function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
 
   return (
     <Modal
+      className="Modal"
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={true}

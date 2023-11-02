@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import "../admin/styling/AdminTable.css";
 import UpdateEventModal from "./UpdateEventModal";
 import { useNavigate } from "react-router-dom";
+import UpdateIcon from "@mui/icons-material/Update";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import CelebrationIcon from "@mui/icons-material/Celebration";
 
 function AdminEvents() {
   const { token, fetchWithToken } = useToken();
@@ -55,46 +58,11 @@ function AdminEvents() {
     }
   };
 
-  const handleUpdate = async (id) => {
-    const eventToUpdate = events.find((event) => event.id === id);
-    if (!eventToUpdate) {
-      alert("Event not found!");
-      return;
-    }
-
-    const updateUrl = `${process.env.REACT_APP_API_HOST}/api/events/${id}`;
-    const fetchConfig = {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(eventToUpdate),
-    };
-
-    const response = await fetch(updateUrl, fetchConfig);
-    if (response.ok) {
-      const updatedEvents = events.filter((event) => event.id !== id);
-      setEvents(updatedEvents);
-      setShowUpdateEventModal(true);
-      setCurrentEventId(id);
-    } else {
-      const errorData = await response.json();
-      console.error("Update error:", errorData);
-      alert(
-        "Failed to update the event. Please check the console for more details."
-      );
-    }
-  };
-
   return (
-    <div className="table table-striped">
+    <div className="table">
       <div id="top-bar">
-        <div id="logo">Helping Hands</div>
+        <h1 className="header">Events</h1>
       </div>
-      <button className="create-btn">
-        <Link to="/events/create">Create</Link>
-      </button>
       <main>
         <table className="admin-table">
           <thead>
@@ -104,6 +72,22 @@ function AdminEvents() {
               <th>Event Name</th>
               <th>location</th>
               <th>Details</th>
+              <th></th>
+              <th>
+                <div
+                  className="create-btn"
+                  onClick={() => (window.location.href = "/events/create")}
+                >
+                  <div className="qube">
+                    <div className="front">Create</div>
+                    <div className="back">
+                      <CelebrationIcon
+                        style={{ fontSize: 50, color: "green" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -113,40 +97,43 @@ function AdminEvents() {
                 <td>{event.date}</td>
                 <td>{event.event_name}</td>
                 <td>{event.location}</td>
+                <td>{event.description}</td>
                 <td>
-                  <Link to={`/events/${event.id}`}>View Details</Link>
+                  <div
+                    className="update-btn"
+                    onClick={() => {
+                      setShowUpdateEventModal(true);
+                      setCurrentEventId(event.id);
+                    }}
+                  >
+                    <div className="qube">
+                      <div className="front">Update</div>
+                      <div className="back">
+                        <Link>
+                          <UpdateIcon
+                            style={{ fontSize: 50, color: "orange" }}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </td>
                 <td>
-                  <button
-                    style={{
-                      backgroundColor: "red",
-                      color: "white",
-                      borderRadius: "12px",
-                      padding: "8px",
-                    }}
-                    name="Delete"
-                    color="red"
-                    className="btn btn-primary"
+                  <div
+                    className="delete-btn"
                     onClick={() => handleDelete(event.id)}
                   >
-                    Delete
-                  </button>
-                </td>
-                <td>
-                  <button
-                    style={{
-                      backgroundColor: "red",
-                      color: "white",
-                      borderRadius: "12px",
-                      padding: "8px",
-                    }}
-                    name="Update"
-                    color="red"
-                    className="btn btn-primary"
-                    onClick={() => handleUpdate(event.id)}
-                  >
-                    Update
-                  </button>
+                    <div className="qube">
+                      <div className="front">Delete</div>
+                      <div className="back">
+                        <Link>
+                          <DeleteForeverIcon
+                            style={{ fontSize: 50, color: "red" }}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </td>
               </tr>
             ))}

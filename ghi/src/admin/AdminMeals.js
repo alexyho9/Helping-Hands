@@ -143,11 +143,9 @@ function AdminMeals() {
                     <div className="qube">
                       <div className="front">Create</div>
                       <div className="back">
-                        <Link to="/meals/create">
-                          <RestaurantIcon
-                            style={{ fontSize: 50, color: "green" }}
-                          />
-                        </Link>
+                        <RestaurantIcon
+                          style={{ fontSize: 50, color: "green" }}
+                        />
                       </div>
                     </div>
                   </div>

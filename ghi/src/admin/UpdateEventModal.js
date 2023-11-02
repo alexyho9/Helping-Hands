@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 
-function UpdateEvent({ eventId, closeModal, afterUpdate }) {
+function UpdateEvent({ eventId, closeModal }) {
   const { token } = useToken();
 
   const [eventName, setEventName] = useState("");
@@ -73,85 +77,113 @@ function UpdateEvent({ eventId, closeModal, afterUpdate }) {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <h1>Update An Event</h1>
-            <form onSubmit={handleSubmit} id="update-event-form">
-              <div className="form-floating mb-3">
-                <input
-                  value={eventName}
-                  onChange={handleEventNameChange}
-                  placeholder="Event Name"
-                  required
-                  type="text"
-                  name="event_name"
-                  id="event_name"
-                  className="form-control"
-                />
-                <label htmlFor="event_name">Event Name</label>
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={true}
+      onClose={closeModal}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={true}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <div className="container">
+            <div className="row">
+              <div className="offset-3 col-6">
+                <div className="shadow p-4 mt-4">
+                  <h1>Update An Event</h1>
+                  <form onSubmit={handleSubmit} id="update-event-form">
+                    <div className="form-floating mb-3">
+                      <input
+                        value={eventName}
+                        onChange={handleEventNameChange}
+                        placeholder="Event Name"
+                        required
+                        type="text"
+                        name="event_name"
+                        id="event_name"
+                        className="form-control"
+                      />
+                      <label htmlFor="event_name">Event Name</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={pictureUrl}
+                        onChange={handlePictureUrlChange}
+                        placeholder="Picture Url"
+                        required
+                        type="text"
+                        name="picture_url"
+                        id="picture_url"
+                        className="form-control"
+                      />
+                      <label htmlFor="picture_url">Picture Url</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={description}
+                        onChange={handleDescriptionChange}
+                        placeholder="Description"
+                        required
+                        type="text"
+                        name="description"
+                        id="description"
+                        className="form-control"
+                      />
+                      <label htmlFor="description">Event Description</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={location}
+                        onChange={handleLocationChange}
+                        placeholder="Location"
+                        required
+                        type="text"
+                        name="location"
+                        id="location"
+                        className="form-control"
+                      />
+                      <label htmlFor="location">Location</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        value={date}
+                        onChange={handleDateChange}
+                        placeholder="Date (YYYY-MM-DD)"
+                        required
+                        type="text"
+                        name="date"
+                        id="date"
+                        className="form-control"
+                      />
+                      <label htmlFor="date">Date (YYYY-MM-DD)</label>
+                    </div>
+                    <div>
+                      <button className="btn btn-success">Update</button>
+                    </div>
+                  </form>
+                </div>
               </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={pictureUrl}
-                  onChange={handlePictureUrlChange}
-                  placeholder="Picture Url"
-                  required
-                  type="text"
-                  name="picture_url"
-                  id="picture_url"
-                  className="form-control"
-                />
-                <label htmlFor="picture_url">Picture Url</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={description}
-                  onChange={handleDescriptionChange}
-                  placeholder="Description"
-                  required
-                  type="text"
-                  name="description"
-                  id="description"
-                  className="form-control"
-                />
-                <label htmlFor="description">Event Description</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={location}
-                  onChange={handleLocationChange}
-                  placeholder="Location"
-                  required
-                  type="text"
-                  name="location"
-                  id="location"
-                  className="form-control"
-                />
-                <label htmlFor="location">Location</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={date}
-                  onChange={handleDateChange}
-                  placeholder="Date (YYYY-MM-DD)"
-                  required
-                  type="text"
-                  name="date"
-                  id="date"
-                  className="form-control"
-                />
-                <label htmlFor="date">Date (YYYY-MM-DD)</label>
-              </div>
-              <div>
-                <button className="btn btn-success">Update</button>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Fade>
+    </Modal>
   );
 }
 
