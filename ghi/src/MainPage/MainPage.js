@@ -12,8 +12,8 @@ import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 
 const mainFeaturedPost = {
-  title: "Basic Info",
-  description: "Some made up info about helping hands in a short manner.",
+  title: "Helping-Hands",
+  description: "A non-profit organization that offers volunteer experience and a soup kitchen to those in need.",
   image: "https://source.unsplash.com/random?volunteer",
   imageText: "main image description",
 };
