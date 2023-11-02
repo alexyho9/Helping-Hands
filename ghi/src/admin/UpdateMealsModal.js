@@ -4,6 +4,10 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import "./styling/Modals.css";
+import Input from "@mui/material/Input";
+import UpdateIcon from "@mui/icons-material/Update";
+import { Link } from "react-router-dom";
 
 function UpdateMeal({ mealId, closeModal, afterUpdate }) {
   const { token } = useToken();
@@ -80,7 +84,6 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
 
   return (
     <Modal
-      className="Modal"
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={true}
@@ -93,6 +96,7 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
     >
       <Fade in={true}>
         <Box
+          className="modal"
           sx={{
             position: "absolute",
             top: "50%",
@@ -100,7 +104,7 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
             transform: "translate(-50%, -50%)",
             width: 400,
             bgcolor: "background.paper",
-            border: "2px solid #000",
+            border: "10px solid #B8DBD9",
             boxShadow: 24,
             p: 4,
           }}
@@ -110,9 +114,17 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
               <div className="offset-3 col-6">
                 <div className="shadow p-4 mt-4">
                   <h1>Update A Meal</h1>
-                  <form onSubmit={handleSubmit} id="update-meal-form">
+                  <form
+                    onSubmit={handleSubmit}
+                    id="update-meal-form"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={title}
                         onChange={handleTitleChange}
                         placeholder="Meal Name"
@@ -122,10 +134,9 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
                         id="meal_name"
                         className="form-control"
                       />
-                      <label htmlFor="meal_name">Meal Name</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={pictureUrl}
                         onChange={handlePictureUrlChange}
                         placeholder="Picture Url"
@@ -135,10 +146,9 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
                         id="picture_url"
                         className="form-control"
                       />
-                      <label htmlFor="picture_url">Picture Url</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={description}
                         onChange={handleDescriptionChange}
                         placeholder="Description"
@@ -148,10 +158,9 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
                         id="description"
                         className="form-control"
                       />
-                      <label htmlFor="description">Meal Description</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={capacity}
                         onChange={handleCapacityChange}
                         placeholder="capacity"
@@ -161,10 +170,9 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
                         id="capacity"
                         className="form-control"
                       />
-                      <label htmlFor="capacity">Capacity</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={date}
                         onChange={handleDateChange}
                         placeholder="Date (YYYY-MM-DD)"
@@ -174,10 +182,24 @@ function UpdateMeal({ mealId, closeModal, afterUpdate }) {
                         id="date"
                         className="form-control"
                       />
-                      <label htmlFor="date">Date (YYYY-MM-DD)</label>
                     </div>
-                    <div>
-                      <button className="btn btn-success">Update</button>
+                    <div
+                      className="update-btn"
+                      style={{
+                        margin: "0 auto",
+                      }}
+                      onClick={handleSubmit}
+                    >
+                      <div className="qube">
+                        <div className="front">Update</div>
+                        <div className="back">
+                          <Link>
+                            <UpdateIcon
+                              style={{ fontSize: 50, color: "orange" }}
+                            />
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </form>
                 </div>

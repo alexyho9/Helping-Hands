@@ -1,0 +1,9 @@
+.modal {
+  border-radius: 10px;
+  border: 10px solid #b8dbd9;
+  text-align: center;
+}
+
+.updatebtn {
+  border-color: red;
+}

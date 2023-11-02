@@ -4,6 +4,10 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import "./styling/Modals.css";
+import Input from "@mui/material/Input";
+import UpdateIcon from "@mui/icons-material/Update";
+import { Link } from "react-router-dom";
 
 function UpdateEvent({ eventId, closeModal }) {
   const { token } = useToken();
@@ -90,6 +94,7 @@ function UpdateEvent({ eventId, closeModal }) {
     >
       <Fade in={true}>
         <Box
+          className="modal"
           sx={{
             position: "absolute",
             top: "50%",
@@ -97,7 +102,7 @@ function UpdateEvent({ eventId, closeModal }) {
             transform: "translate(-50%, -50%)",
             width: 400,
             bgcolor: "background.paper",
-            border: "2px solid #000",
+            border: "10px solid #B8DBD9",
             boxShadow: 24,
             p: 4,
           }}
@@ -107,9 +112,17 @@ function UpdateEvent({ eventId, closeModal }) {
               <div className="offset-3 col-6">
                 <div className="shadow p-4 mt-4">
                   <h1>Update An Event</h1>
-                  <form onSubmit={handleSubmit} id="update-event-form">
+                  <form
+                    onSubmit={handleSubmit}
+                    id="update-event-form"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={eventName}
                         onChange={handleEventNameChange}
                         placeholder="Event Name"
@@ -119,10 +132,9 @@ function UpdateEvent({ eventId, closeModal }) {
                         id="event_name"
                         className="form-control"
                       />
-                      <label htmlFor="event_name">Event Name</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={pictureUrl}
                         onChange={handlePictureUrlChange}
                         placeholder="Picture Url"
@@ -132,10 +144,9 @@ function UpdateEvent({ eventId, closeModal }) {
                         id="picture_url"
                         className="form-control"
                       />
-                      <label htmlFor="picture_url">Picture Url</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={description}
                         onChange={handleDescriptionChange}
                         placeholder="Description"
@@ -145,10 +156,9 @@ function UpdateEvent({ eventId, closeModal }) {
                         id="description"
                         className="form-control"
                       />
-                      <label htmlFor="description">Event Description</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={location}
                         onChange={handleLocationChange}
                         placeholder="Location"
@@ -158,10 +168,9 @@ function UpdateEvent({ eventId, closeModal }) {
                         id="location"
                         className="form-control"
                       />
-                      <label htmlFor="location">Location</label>
                     </div>
                     <div className="form-floating mb-3">
-                      <input
+                      <Input
                         value={date}
                         onChange={handleDateChange}
                         placeholder="Date (YYYY-MM-DD)"
@@ -171,10 +180,24 @@ function UpdateEvent({ eventId, closeModal }) {
                         id="date"
                         className="form-control"
                       />
-                      <label htmlFor="date">Date (YYYY-MM-DD)</label>
                     </div>
-                    <div>
-                      <button className="btn btn-success">Update</button>
+                    <div
+                      className="update-btn"
+                      style={{
+                        margin: "0 auto",
+                      }}
+                      onClick={handleSubmit}
+                    >
+                      <div className="qube">
+                        <div className="front">Update</div>
+                        <div className="back">
+                          <Link>
+                            <UpdateIcon
+                              style={{ fontSize: 50, color: "orange" }}
+                            />
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </form>
                 </div>

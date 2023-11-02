@@ -4,6 +4,10 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import "./styling/Modals.css";
+import Input from "@mui/material/Input";
+import UpdateIcon from "@mui/icons-material/Update";
+import { Link } from "react-router-dom";
 
 function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
   const { token } = useToken();
@@ -74,10 +78,10 @@ function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
       alert("An error occurred. Please try again later.");
     }
   };
+  const ariaLabel = { "aria-label": "Description" };
 
   return (
     <Modal
-      className="Modal"
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={true}
@@ -90,6 +94,7 @@ function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
     >
       <Fade in={true}>
         <Box
+          className="modal"
           sx={{
             position: "absolute",
             top: "50%",
@@ -97,7 +102,7 @@ function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
             transform: "translate(-50%, -50%)",
             width: 400,
             bgcolor: "background.paper",
-            border: "2px solid #000",
+            border: "10px solid #B8DBD9",
             boxShadow: 24,
             p: 4,
           }}
@@ -107,88 +112,106 @@ function UpdateUsersModal({ initialUsername, closeModal, afterUpdate }) {
               <div className="row">
                 <div className="offset-3 col-6">
                   <div className="shadow p-4 mt-4">
-                    <h1>Update A user</h1>
-                    <form onSubmit={handleSubmit} id="update-user-form">
+                    <h1>Update A User</h1>
+                    <form
+                      onSubmit={handleSubmit}
+                      id="update-user-form"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
                       <div className="form-floating mb-3">
-                        <input
+                        <Input
+                          inputProps={ariaLabel}
                           value={first_name}
                           onChange={handleFirstNameChange}
-                          placeholder="first_name"
+                          placeholder="First Name"
                           required
                           type="text"
                           name="first_name"
                           id="first_name"
                           className="form-control"
                         />
-                        <label htmlFor="user_name">First Name</label>
                       </div>
                       <div className="form-floating mb-3">
-                        <input
+                        <Input
                           value={last_name}
                           onChange={handleLastNameChange}
-                          placeholder="last_name"
+                          placeholder="Last Name"
                           required
                           type="text"
                           name="last_name"
                           id="last_name"
                           className="form-control"
                         />
-                        <label htmlFor="last_name">Last Name</label>
                       </div>
                       <div className="form-floating mb-3">
-                        <input
+                        <Input
                           value={newusername}
                           onChange={handleUsernameChange}
-                          placeholder="username"
+                          placeholder="Username"
                           required
                           type="text"
                           name="username"
                           id="username"
                           className="form-control"
                         />
-                        <label htmlFor="username">user username</label>
                       </div>
                       <div className="form-floating mb-3">
-                        <input
+                        <Input
                           value={password}
                           onChange={handlePasswordChange}
-                          placeholder="password"
+                          placeholder="Password"
                           required
                           type="password"
                           name="password"
                           id="password"
                           className="form-control"
                         />
-                        <label htmlFor="username">Password</label>
                       </div>
                       <div className="form-floating mb-3">
-                        <input
+                        <Input
                           value={email}
                           onChange={handleEmailChange}
-                          placeholder="email"
+                          placeholder="Email"
                           required
                           type="text"
                           name="email"
                           id="email"
                           className="form-control"
                         />
-                        <label htmlFor="username">Email</label>
                       </div>
                       <div className="form-floating mb-3">
-                        <input
+                        <Input
                           value={role}
                           onChange={handleRoleChange}
-                          placeholder="role"
+                          placeholder="Role"
                           required
                           type="text"
                           name="role"
                           id="capaciy"
                           className="form-control"
                         />
-                        <label htmlFor="role">role</label>
-                      </div>
-                      <div>
-                        <button className="btn btn-success">Update</button>
+                        <div
+                          className="update-btn"
+                          style={{
+                            margin: "0 auto",
+                          }}
+                          onClick={handleSubmit}
+                        >
+                          <div className="qube">
+                            <div className="front">Update</div>
+                            <div className="back">
+                              <Link>
+                                <UpdateIcon
+                                  style={{ fontSize: 50, color: "orange" }}
+                                />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </form>
                   </div>
