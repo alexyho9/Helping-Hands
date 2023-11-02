@@ -19,6 +19,7 @@ import MainPage from "./MainPage/MainPage";
 import Navbar from "./Nav/Nav";
 import Logout from "./users/Logout";
 
+
 function App() {
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");

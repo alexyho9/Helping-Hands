@@ -20,14 +20,20 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddIcon from "@mui/icons-material/Add";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import "./Nav.css";
+import { useLocation } from "react-router-dom";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 
 const Navbar = ({ userRole }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { token } = useToken();
+  const {pathname} = useLocation();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+  if (pathname === "/login" || pathname === "/signup") {
+    return null;
+  }
 
   return (
     <div>
@@ -158,7 +164,7 @@ const Navbar = ({ userRole }) => {
               </Link>
             </ListItem>
             <Divider />
-            {userRole === "admin" && (
+            {userRole === "admin" && token && (
               <>
                 <ListItem>
                   <Link
@@ -196,6 +202,24 @@ const Navbar = ({ userRole }) => {
                         Admin Event
                       </Typography>
                     )}
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link
+                    href={`${process.env.PUBLIC_URL}/admin/users`}
+                    style={{
+                      margin: "16px 0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#000000",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <SupervisedUserCircleIcon fontSize="large" className="hover-2" />
+                    <Typography variant="h6" style={{ paddingTop: "20px" }}>
+                      Admin Users
+                    </Typography>
                   </Link>
                 </ListItem>
                 <Divider />

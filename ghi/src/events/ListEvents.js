@@ -14,10 +14,17 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
+import { useRef } from "react";
 
 function ListEvents() {
   const { token, fetchWithToken } = useToken();
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+  const [countdown, setCountdown] = useState(5);
+  const countdownRef = useRef(5);
 
   const fetchEvents = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/events/`;
@@ -28,11 +35,54 @@ function ListEvents() {
       console.error(error);
     }
   };
+  const handleAlertClose = () => {
+    setShowAlert(false);
+    setCountdown(5);
+  };
+  // useEffect(() => {
+  //   if (token) {
+  //     fetchEvents();
+  //   } else{
+  //     setShowAlert(true)
+  //     const countdownInterval = setInterval(() => {
+  //       setCountdown((prevCountdown) => {
+  //         countdownRef.current = prevCountdown - 1;
+  //         return countdownRef.current;
+  //       });
+  //       if (countdownRef.current <= 1){
+  //         clearInterval(countdownInterval)
+  //         navigate("/")
+  //       }
+  //     }, 1000)
+  //   }
+  // }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (token) {
+    let countdownInterval;
+    if (!token) {
+      setShowAlert(true);
+      countdownInterval = setInterval(() => {
+        setCountdown((prevCountdown) => {
+          countdownRef.current = prevCountdown - 1;
+          return countdownRef.current;
+        });
+        if (countdownRef.current <= 1) {
+          clearInterval(countdownInterval);
+          navigate(`${process.env.PUBLIC_URL}/login`);
+        }
+      }, 1000);
+    } else {
+      setShowAlert(false);
       fetchEvents();
     }
+
+    
+    return () => {
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+    };
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   function Copyright() {
     return (
@@ -121,7 +171,7 @@ function ListEvents() {
                     <CardActions>
                       <Button
                         size="small"
-                        href={`${process.env.PUBLIC_URL}/events/${event.id}/` }
+                        href={`${process.env.PUBLIC_URL}/events/${event.id}/`}
                       >
                         {" "}
                         View{" "}
@@ -132,6 +182,12 @@ function ListEvents() {
               ))}
             </Grid>
           </Container>
+          {showAlert &&  (
+            <Alert variant="filled" severity="error" onClose={handleAlertClose}>
+              You must be logged in to view this page... redirecting to login in{" "}
+              {countdown} seconds
+            </Alert>
+          )}
           <Copyright />
         </Box>
       </main>

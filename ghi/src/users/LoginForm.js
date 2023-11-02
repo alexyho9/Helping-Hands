@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"; // Import The
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import backgroundImg from './images/eventscorporate.png'
+
 
 const LoginForm = () => {
   const [password, setPassword] = useState("");
@@ -67,8 +69,7 @@ const LoginForm = () => {
           flexDirection: "column",
           alignItems: "center",
           minHeight: "100vh",
-          backgroundImage:
-            'url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/73f385ae-e909-46b9-9faf-57dc2b09b346/dddraqt-f69a79cb-7e12-4a0c-b581-2dba06365070.png/v1/fill/w_1280,h_720,q_80,strp/black_material_ui_background_by_ministerkraft_dddraqt-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvNzNmMzg1YWUtZTkwOS00NmI5LTlmYWYtNTdkYzJiMDliMzQ2XC9kZGRyYXF0LWY2OWE3OWNiLTdlMTItNGEwYy1iNTgxLTJkYmEwNjM2NTA3MC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.UtzmPfYs0s4-l9mf1__EQeo_Pg2fsrHUJZZoqPzIU3M")',
+          backgroundImage: `url(${backgroundImg})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
@@ -137,7 +138,10 @@ const LoginForm = () => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href={`${process.env.PUBLIC_URL}/signup`} variant="body2">
+                  <Link
+                    href={`${process.env.PUBLIC_URL}/signup`}
+                    variant="body2"
+                  >
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
