@@ -76,7 +76,9 @@ function AdminEvents() {
               <th>
                 <div
                   className="create-btn"
-                  onClick={() => (window.location.href = "/events/create")}
+                  onClick={() => {
+                    navigate(`/events/create`);
+                  }}
                 >
                   <div className="qube">
                     <div className="front">Create</div>

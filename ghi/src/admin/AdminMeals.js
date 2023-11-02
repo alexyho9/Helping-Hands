@@ -138,7 +138,9 @@ function AdminMeals() {
                 <th>
                   <div
                     className="create-btn"
-                    onClick={() => (window.location.href = "/meals/create")}
+                    onClick={() => {
+                      navigate(`/meals/create`);
+                    }}
                   >
                     <div className="qube">
                       <div className="front">Create</div>
