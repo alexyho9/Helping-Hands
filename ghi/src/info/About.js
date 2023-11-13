@@ -3,10 +3,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box, Grid, Typography } from "@mui/material";
 
 const AboutPage = () => {
-  const apiKey = "AIzaSyDArBhom1kBbXvMChKJK1f69BeC2rFuF1Q";
-  const address = "2101+Pico+Blvd,+Santa+Monica,+CA+90405";
-  const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=SantaMonica,CA&zoom=13&size=600x300&markers=${address}&key=${apiKey}`;
-
   const aboutText = [
     "Helping Hands has always been passionate about making an impact the community. " +
       "By harnessing the willingness of volunteers, we are attempt to tackle the growing problems of " +
@@ -98,7 +94,6 @@ const AboutPage = () => {
               Location
             </Typography>
 
-            <img src={mapUrl} alt="Google Map" />
             <Typography variant="h5" color="#F4F4F9" sx={{ my: 2 }}>
               Helping Hands Community Center
               <br />
